@@ -1,0 +1,8 @@
+# Fotos originales: se quedan en el computador (pesan demasiado para GitHub)
+imagenes/
+.venv/
+reportes/
+__pycache__/
+~$*.xlsx
+.DS_Store
+Thumbs.db

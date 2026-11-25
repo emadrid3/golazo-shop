@@ -1,0 +1,3 @@
+Ponga aquí el Excel de productos (por ejemplo productos.xlsx).
+Si hay varios, el script usa el más reciente.
+Columnas: categoria | subcategoria | ruta_categoria | nombre | precio venta | carpeta_fotos

@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Golazo Shop · Catálogo de camisetas deportivas</title>
+<meta name="description" content="Catálogo digital de Golazo Shop: camisetas de fútbol, selecciones, retro, NBA, NFL, F1 y más. Precios en pesos colombianos. Pedidos por Instagram y envíos a toda Colombia.">
+<meta name="theme-color" content="#030303">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Golazo Shop · Catálogo de camisetas deportivas">
+<meta property="og:description" content="Encuentra la camiseta de tu equipo. Pedidos por Instagram @golazo.oficial21 · Envíos a toda Colombia.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/logo-texto.png" as="image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="data/catalogo.json" as="fetch" crossorigin>
+<style>
+/* =====================================================================
+   1. IDENTIDAD VISUAL — cambie estas variables al recibir el logo oficial
+   ===================================================================== */
+:root{
+  /* Paleta tomada del logo oficial: negro profundo, dorado y blanco plata */
+  --ink:#030303; --ink-2:#0C0C0D; --ink-3:#161618; --ink-line:#2A2A2E;
+  --paper:#080809;           /* fondo general de la página */
+  --card:#121214;            /* tarjetas y paneles */
+  --line:#26262A; --muted:#9C9AA2; --text:#F4F1EA;
+  --gold:#E3AC48; --gold-1:#F8D47C; --gold-3:#A8711E;
+  --grad-gold:linear-gradient(135deg,#F8D47C 0%,#E3AC48 45%,#A8711E 100%);
+  --accent:#E3AC48;          /* color principal (dorado del logo) */
+  --accent-ink:#0A0A0A;      /* texto sobre dorado */
+  --silver:#E9E9EC;
+  --hot:#E3AC48;
+  --ig1:#F58529; --ig2:#DD2A7B; --ig3:#8134AF;
+  --font-display:'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --r-sm:10px; --r:16px; --r-lg:24px;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 70px rgba(0,0,0,.6);
+  --hdr:72px; --ease:cubic-bezier(.2,.7,.2,1);
+  --wrap:1320px;
+}
+/* =====================================================================
+   2. BASE
+   ===================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--hdr) + 20px)}
+body{margin:0;font-family:var(--font-body);font-size:15px;line-height:1.5;color:var(--text);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ico.fill{fill:currentColor;stroke:none}
+.display{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.gold-txt{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 20px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .2s var(--ease),background .2s,box-shadow .2s,color .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-accent{background:var(--grad-gold);color:var(--accent-ink)}
+.btn-accent:hover{box-shadow:0 0 0 4px rgba(227,172,72,.25),0 10px 30px rgba(227,172,72,.25)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.btn-dark{background:var(--silver);color:#0A0A0A}
+.btn-dark:hover{background:#fff}
+.btn-line{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.btn-line:hover{border-color:var(--text)}
+.btn-ig{background:linear-gradient(45deg,var(--ig1),var(--ig2) 55%,var(--ig3));color:#fff}
+.btn-ig:hover{box-shadow:0 8px 24px rgba(221,42,123,.35)}
+.btn-sm{height:38px;padding:0 14px;font-size:14px}
+
+/* =====================================================================
+   3. HEADER + NAVEGACIÓN
+   ===================================================================== */
+.topbar{background:#000;color:#cfd3da;font-size:12.5px;letter-spacing:.02em;overflow:hidden}
+.topbar .wrap{display:flex;gap:28px;align-items:center;justify-content:center;height:34px}
+.topbar b{color:var(--accent);font-weight:600}
+.topbar span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.topbar .ico{width:15px;height:15px}
+@media (max-width:720px){.topbar .hide-m{display:none}}
+
+.hdr{position:sticky;top:0;z-index:50;background:rgba(3,3,3,.94);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);color:#fff;border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+.hdr.scrolled{border-color:rgba(227,172,72,.25);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.hdr-row{display:flex;align-items:center;gap:16px;height:var(--hdr)}
+.logo{display:flex;align-items:center;gap:10px;flex:none}
+.logo img{height:52px;width:auto}
+.logo .mark{height:54px;width:54px;border-radius:50%}
+@media (max-width:560px){.logo .mark{display:none}.logo img{height:40px}}
+.logo-txt{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:28px;letter-spacing:.01em;line-height:1;text-transform:uppercase}
+.logo-txt em{color:var(--gold);font-style:italic}
+.logo-txt small{display:block;font-size:11px;font-style:normal;letter-spacing:.42em;color:#aab1bd;font-weight:600;margin-top:2px}
+.icon-btn{position:relative;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#fff;transition:background .2s}
+.icon-btn:hover{background:rgba(255,255,255,.1)}
+.badge-n{position:absolute;top:3px;right:2px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--grad-gold);color:var(--accent-ink);font-size:11px;font-weight:700;display:grid;place-items:center;transform:scale(0);transition:transform .25s var(--ease)}
+.badge-n.on{transform:scale(1)}
+.hdr-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
+.hdr-ig{margin-left:6px}
+.burger{display:none}
+
+/* Buscador */
+.search{position:relative;flex:1;max-width:640px;margin:0 auto}
+.search-box{display:flex;align-items:center;gap:10px;height:46px;padding:0 8px 0 16px;border-radius:999px;background:var(--ink-3);color:var(--text);border:1px solid var(--ink-line);transition:box-shadow .2s,border-color .2s}
+.search-box:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(227,172,72,.18)}
+.search-box .ico{color:var(--gold)}
+.search input{flex:1;min-width:0;border:0;outline:0;background:none;height:100%;font-size:15px}
+.search input::placeholder{color:#7c7b82}
+.search input::-webkit-search-cancel-button,.search input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.search .clear{display:none;width:32px;height:32px;border-radius:50%;place-items:center;color:var(--muted)}
+.search.has-q .clear{display:grid}
+.search .clear:hover{background:var(--ink-line)}
+.sugs{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--ink-2);border:1px solid var(--ink-line);color:var(--text);border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;display:none;max-height:min(70vh,560px);overflow-y:auto;z-index:60}
+.sugs.on{display:block;animation:pop .18s var(--ease)}
+.sugs h6{margin:0;padding:12px 16px 6px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.sug{display:flex;align-items:center;gap:12px;width:100%;padding:8px 16px;text-align:left}
+.sug:hover,.sug.act{background:var(--ink-3)}
+.sug img,.sug .ph{width:44px;height:44px;border-radius:8px;object-fit:contain;background:#fff;flex:none}
+.sug .ph{background:var(--ink-3);color:var(--gold)}
+.sug .t{flex:1;min-width:0;font-size:14px;line-height:1.3}
+.sug .t small{display:block;color:var(--muted);font-size:12px}
+.sug .pr{font-weight:700;font-size:13px;white-space:nowrap;color:var(--gold)}
+.sug .chip-k{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--ink-3);color:var(--muted);white-space:nowrap}
+.sug-all{display:block;width:100%;padding:12px 16px;border-top:1px solid var(--line);font-weight:600;font-size:14px;text-align:left}
+.sug-all{color:var(--gold)}
+.sug-all:hover{background:var(--ink-3)}
+.sug-empty{padding:16px;color:var(--muted);font-size:14px}
+
+/* Menú de categorías */
+.nav{border-top:1px solid var(--ink-line)}
+.nav-list{display:flex;gap:2px;list-style:none;margin:0;padding:0;height:46px;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+.nav-list::-webkit-scrollbar{display:none}
+.nav-item{position:static}
+.nav-btn{height:100%;display:flex;align-items:center;gap:6px;padding:0 14px;font-size:14px;font-weight:600;color:#d7dbe2;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.nav-btn:hover,.nav-item.open .nav-btn,.nav-btn.act{color:var(--gold-1);border-color:var(--gold)}
+.nav-btn small{font-weight:500;color:#7f8896;font-size:12px}
+.nav-btn .ico{width:14px;height:14px;transition:transform .2s}
+.nav-item.open .nav-btn .ico{transform:rotate(180deg)}
+.mega{position:absolute;left:0;right:0;top:100%;background:var(--ink-2);border-top:1px solid rgba(227,172,72,.35);box-shadow:0 30px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s var(--ease),visibility .2s;max-height:calc(100vh - 160px);overflow-y:auto}
+.nav-item.open .mega{opacity:1;visibility:visible;transform:none}
+.mega-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:26px 30px;padding:28px 20px 32px}
+.mega-col h5{margin:0 0 10px;font-family:var(--font-display);font-size:18px;letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.mega-col h5 button{display:flex;gap:8px;align-items:baseline;color:inherit;text-transform:inherit;text-align:left}
+.mega-col h5 button:hover{color:var(--gold)}
+.mega-col h5{border-bottom:1px solid rgba(227,172,72,.25);padding-bottom:6px}
+.mega-col h5 small{font-family:var(--font-body);font-size:12px;color:#7f8896;font-weight:500;letter-spacing:0;text-transform:none}
+.mega-col ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.mega-col li button{color:#aeb5c1;font-size:14px;padding:3px 0;text-align:left;display:flex;gap:6px;width:100%}
+.mega-col li button:hover{color:#fff}
+.mega-col li button span{color:#5f6878;font-size:12px}
+.mega-head{display:flex;align-items:center;justify-content:space-between;padding:22px 20px 0}
+.mega-head h4{margin:0;font-family:var(--font-display);font-size:30px;text-transform:uppercase;color:#fff}
+@media (max-width:980px){
+  .logo .mark{height:44px;width:44px}
+  .nav{display:none}
+  .burger{display:grid}
+  .hdr-row{flex-wrap:wrap;height:auto;padding:10px 0;row-gap:10px}
+  .search{order:5;flex-basis:100%;max-width:none}
+  .search-box{height:44px}
+  .hdr-ig .lbl{display:none}
+  .hdr-ig{width:42px;padding:0}
+  :root{--hdr:124px}
+}
+
+/* Menú móvil */
+.drawer{position:fixed;inset:0;z-index:90;visibility:hidden}
+.drawer.on{visibility:visible}
+.drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .3s}
+.drawer.on .drawer-bg{opacity:1}
+.drawer-panel{position:absolute;top:0;bottom:0;left:0;width:min(88vw,380px);background:var(--ink);color:#fff;transform:translateX(-100%);transition:transform .35s var(--ease);display:flex;flex-direction:column}
+.drawer.on .drawer-panel{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--ink-line)}
+.drawer-body{flex:1;overflow-y:auto;padding:8px 0 24px}
+.acc{border-bottom:1px solid var(--ink-line)}
+.acc>button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:16px 18px;font-weight:600;font-size:16px}
+.acc>button small{color:#7f8896;font-weight:500;margin-left:6px}
+.acc>button .ico{transition:transform .25s}
+.acc.open>button .ico{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 18px 14px}
+.acc.open .acc-body{display:block}
+.acc-body button{display:flex;justify-content:space-between;width:100%;padding:9px 0;color:#bfc5cf;font-size:14.5px;text-align:left}
+.acc-body button span{color:#6c7585;font-size:12.5px}
+.acc-body .all{color:var(--gold);font-weight:600}
+.acc-body .sec-t{margin:10px 0 2px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7f8896}
+
+/* =====================================================================
+   4. HERO + ACCESOS
+   ===================================================================== */
+.hero{position:relative;background:var(--ink);color:#fff;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(760px 520px at 78% 45%,rgba(227,172,72,.20),transparent 62%),
+  radial-gradient(600px 420px at 0% 100%,rgba(168,113,30,.16),transparent 60%),
+  repeating-linear-gradient(115deg,rgba(227,172,72,.035) 0 2px,transparent 2px 120px)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--grad-gold)}
+.hero-pitch{position:absolute;inset:0;z-index:-1;opacity:.07;pointer-events:none}
+.hero-in{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:64px 20px 72px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;border:1px solid rgba(227,172,72,.4);background:rgba(227,172,72,.08);color:var(--gold-1);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(227,172,72,.6);animation:ping 2s infinite}
+.hero h1{font-size:clamp(44px,6.4vw,84px);margin:18px 0 16px}
+.hero h1 em{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;padding-right:.06em}
+.hero p.lead{font-size:clamp(16px,1.6vw,19px);color:#c9c6bf;max-width:560px;margin:0 0 28px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:30px;margin-top:38px;flex-wrap:wrap}
+.hero-stats div{font-size:13px;color:#9aa2ae}
+.hero-stats b{display:block;font-family:var(--font-display);font-style:italic;font-size:36px;line-height:1;font-weight:800;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-stats div{padding-left:14px;border-left:2px solid rgba(227,172,72,.45)}
+.hero-brand{position:relative;display:grid;place-items:center;min-height:480px}
+.hero-logo{width:min(480px,100%);aspect-ratio:1/1;position:relative;z-index:1;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+.hero-logo img{width:100%;height:100%;object-fit:contain}
+.hero-ring{position:absolute;width:min(520px,100%);aspect-ratio:1/1;border-radius:50%;border:1px solid rgba(227,172,72,.25);box-shadow:inset 0 0 80px rgba(227,172,72,.08)}
+.hero-ring::before{content:"";position:absolute;inset:-22px;border-radius:50%;border:1px dashed rgba(227,172,72,.18);animation:spin 60s linear infinite}
+.mosaic{position:absolute;inset:0;z-index:2;pointer-events:none}
+.mosaic figure{pointer-events:auto}
+.mosaic figure{position:absolute;margin:0;background:#fff;border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;transition:transform .6s var(--ease);cursor:pointer;border:2px solid var(--gold)}
+.mosaic figure img{width:100%;height:100%;object-fit:contain;background:#fff}
+.mosaic figure figcaption{position:absolute;left:8px;right:8px;bottom:8px;padding:6px 8px;border-radius:10px;background:rgba(3,3,3,.85);color:#fff;font-size:11.5px;line-height:1.25;backdrop-filter:blur(6px)}
+.mosaic figure figcaption b{display:block;color:var(--gold-1);font-size:13px}
+.mosaic .m1{width:150px;height:170px;left:0;bottom:6%;transform:rotate(-7deg)}
+.mosaic .m2{width:140px;height:160px;right:0;top:4%;transform:rotate(6deg)}
+.mosaic .m3{display:none}
+.mosaic figure:hover{transform:rotate(0) scale(1.03);z-index:5}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr;padding:26px 20px 44px;gap:10px;text-align:center}.hero-brand{min-height:0;order:-1}.hero-logo{width:min(250px,70vw)}.hero-ring{width:min(270px,76vw)}.mosaic{display:none}.hero-stats{gap:18px;justify-content:center}.hero-ctas{justify-content:center}.hero p.lead{margin-inline:auto}}
+
+.ticker{background:var(--grad-gold);color:var(--accent-ink);overflow:hidden;white-space:nowrap;border-block:1px solid #000}
+.ticker-track{display:inline-flex;gap:0;animation:tick 60s linear infinite;padding:12px 0}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker button{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:20px;text-transform:uppercase;padding:0 22px;display:inline-flex;align-items:center;gap:22px}
+.ticker button::after{content:"";width:8px;height:8px;background:var(--accent-ink);transform:rotate(45deg)}
+.ticker button:hover{text-decoration:underline}
+
+.sec-title{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 20px}
+.sec-title h2{font-size:clamp(30px,3.6vw,44px);margin:0}
+.sec-title p{margin:6px 0 0;color:var(--muted)}
+.quick{padding:52px 0 18px}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:118px;padding:16px;border-radius:var(--r);background:var(--ink);color:#fff;overflow:hidden;text-align:left;isolation:isolate;border:1px solid var(--ink-line);transition:transform .25s var(--ease),box-shadow .25s,border-color .25s}
+.tile::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--g,linear-gradient(135deg,#1d1810,#060606))}
+.tile:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 16px 34px rgba(0,0,0,.5),0 0 0 1px rgba(227,172,72,.3)}
+.tile .ico{width:30px;height:30px;stroke-width:1.6;color:var(--gold)}
+.tile b{hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;font-family:var(--font-display);font-style:italic;font-size:21px;text-transform:uppercase;line-height:1;margin-top:14px;display:block}
+.tile small{color:rgba(255,255,255,.7);font-size:12.5px}
+.tile .bg-ico{position:absolute;right:-14px;bottom:-14px;width:92px;height:92px;opacity:.10;z-index:-1;color:var(--gold)}
+@media (max-width:720px){.quick-grid{grid-auto-flow:column;grid-auto-columns:46%;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin:0 -20px;padding-inline:20px;scrollbar-width:none}.quick-grid::-webkit-scrollbar{display:none}.tile{scroll-snap-align:start;min-height:108px}}
+
+/* =====================================================================
+   5. CATÁLOGO: barra, filtros, tarjetas, paginación
+   ===================================================================== */
+.catalog{padding:38px 0 70px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.count{font-size:14px;color:var(--muted)}
+.count b{color:var(--text)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.select{height:40px;padding:0 34px 0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23E3AC48' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;color:var(--text);appearance:none;-webkit-appearance:none;font-size:14px;cursor:pointer}
+.btn-filters{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 12px;border-radius:999px;background:var(--ink-3);border:1px solid rgba(227,172,72,.4);color:#fff;font-size:13px;animation:pop .2s var(--ease)}
+.chip small{color:var(--gold)}
+.chip button{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.14)}
+.chip button .ico{width:12px;height:12px}
+.chip-clear{background:none;color:var(--text);text-decoration:underline;padding:0 6px}
+.fix-note{margin:-4px 0 16px;font-size:14px;color:var(--muted)}
+.fix-note b{color:var(--text)}
+
+.layout{display:grid;grid-template-columns:270px 1fr;gap:28px;align-items:start}
+.filters{position:sticky;top:calc(var(--hdr) + 62px);max-height:calc(100vh - var(--hdr) - 80px);overflow-y:auto;padding-right:6px;scrollbar-width:thin}
+.f-head{display:none}
+.f-group{border-bottom:1px solid var(--line);padding:14px 0}
+.f-group>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;font-size:14px;letter-spacing:.01em}
+.f-group>summary::-webkit-details-marker{display:none}
+.f-group>summary .ico{width:16px;height:16px;transition:transform .2s}
+.f-group[open]>summary .ico{transform:rotate(180deg)}
+.f-group>summary em{font-style:normal;font-weight:600;background:var(--grad-gold);color:var(--accent-ink);font-size:11px;padding:1px 7px;border-radius:9px;margin-left:6px}
+.f-body{padding-top:10px}
+.f-search{width:100%;height:36px;border-radius:10px;border:1px solid var(--line);padding:0 12px;margin-bottom:8px;background:var(--card);color:var(--text);font-size:13.5px}
+.opt{display:flex;align-items:center;gap:10px;padding:5px 2px;font-size:14px;cursor:pointer;border-radius:8px}
+.opt:hover{color:var(--gold-1)}
+.opt input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:5px;border:1.5px solid #55555c;display:grid;place-items:center;flex:none;transition:background .15s,border-color .15s;margin:0;cursor:pointer}
+.opt input:checked{background:var(--gold);border-color:var(--gold)}
+.opt input:checked::after{content:"";width:9px;height:5px;border:2px solid #0A0A0A;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.opt span{flex:1;min-width:0}
+.opt small{color:var(--muted);font-size:12px}
+.opt.zero{opacity:.45}
+.f-more{margin-top:6px;font-size:13px;font-weight:600;text-decoration:underline}
+.price-row{display:flex;gap:8px;align-items:center}
+.price-row label{flex:1;font-size:12px;color:var(--muted)}
+.price-row input{width:100%;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px;margin-top:3px;background:var(--card);color:var(--text);font-size:14px}
+.range{position:relative;height:28px;margin:10px 4px 2px}
+.range input{position:absolute;left:0;right:0;width:100%;top:6px;pointer-events:none;appearance:none;-webkit-appearance:none;background:none;height:16px;margin:0}
+.range input::-webkit-slider-thumb{pointer-events:auto;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#0A0A0A;border:3px solid var(--gold);cursor:pointer}
+.range input::-moz-range-thumb{pointer-events:auto;width:14px;height:14px;border-radius:50%;background:var(--ink);border:3px solid var(--accent);cursor:pointer}
+.range .track{position:absolute;left:0;right:0;top:13px;height:3px;background:var(--line);border-radius:2px}
+.range .fill{position:absolute;top:13px;height:3px;background:var(--gold);border-radius:2px}
+.fav-toggle{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;padding:14px 0;border-bottom:1px solid var(--line);width:100%}
+.fav-toggle .sw{margin-left:auto;width:38px;height:22px;border-radius:11px;background:#3a3a40;position:relative;transition:background .2s}
+.fav-toggle .sw::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s var(--ease)}
+.fav-toggle[aria-pressed=true] .sw{background:var(--gold-3)}
+.fav-toggle[aria-pressed=true] .sw::after{transform:translateX(16px);background:var(--gold-1)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s;animation:rise .5s var(--ease) both;animation-delay:calc(var(--i,0) * 22ms)}
+.card:hover{transform:translateY(-4px);border-color:rgba(227,172,72,.7);box-shadow:0 22px 44px rgba(0,0,0,.55),0 0 0 1px rgba(227,172,72,.25)}
+.card-media{position:relative;aspect-ratio:1/1;background:#fff;overflow:hidden}
+.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .45s,transform .6s var(--ease)}
+.card-media img.alt{opacity:0}
+.card:hover .card-media img.main{transform:scale(1.04)}
+.card.has-alt:hover .card-media img.alt{opacity:1}
+.card.has-alt:hover .card-media img.main{opacity:0}
+.card-media img.lz{opacity:0}
+.card-media img.main.ok{opacity:1}
+.card-badges{position:absolute;left:10px;top:10px;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.bdg{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:#0A0A0A;color:#fff}
+.bdg.new{background:var(--grad-gold);color:#0A0A0A}
+.bdg.retro{background:#0A0A0A;color:var(--gold-1);border:1px solid var(--gold)}
+.bdg.kid{background:var(--silver);color:#0A0A0A}
+.fav{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:transform .2s var(--ease)}
+.fav:hover{transform:scale(1.08)}
+.fav .ico{width:19px;height:19px;color:#141414}
+.fav[aria-pressed=true] .ico{fill:#D4202C;stroke:#D4202C;animation:beat .35s var(--ease)}
+.card-body{display:flex;flex-direction:column;flex:1;padding:14px 16px 16px;gap:6px}
+.card-cat{margin:0;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-name{margin:0;font-size:14.5px;font-weight:600;line-height:1.35;word-break:break-word}
+.card-tags{margin:0;font-size:12.5px;color:var(--muted)}
+.card-foot{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:auto;padding-top:10px}
+.price{font-family:var(--font-display);font-weight:800;font-size:25px;line-height:1;letter-spacing:.01em;color:var(--gold-1)}
+.price small{font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--muted);margin-left:3px}
+.btn-det{height:38px;padding:0 14px;border-radius:999px;background:transparent;border:1px solid rgba(227,172,72,.55);color:var(--gold-1);font-size:13.5px;font-weight:600;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s,color .2s}
+.btn-det .ico{width:16px;height:16px;transition:transform .2s}
+.card:hover .btn-det .ico{transform:translateX(3px)}
+.card:hover .btn-det{background:var(--grad-gold);border-color:transparent;color:var(--accent-ink)}
+.skel{border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden}
+.skel div{aspect-ratio:1/1;background:linear-gradient(90deg,#17171a 0,#232327 40%,#17171a 80%);background-size:200% 100%;animation:shimmer 1.2s infinite}
+.skel p{height:12px;margin:14px 16px;border-radius:6px;background:#1e1e22}
+.skel p+p{width:55%;margin-top:0}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.empty h3{font-family:var(--font-display);font-size:32px;text-transform:uppercase;margin:12px 0 6px}
+.empty p{color:var(--muted);margin:0 0 18px}
+.empty .ico{width:44px;height:44px;margin:auto;color:var(--gold)}
+.pager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:36px;flex-wrap:wrap}
+.pager button{min-width:42px;height:42px;padding:0 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--text);font-weight:600;font-size:14px;transition:background .2s,border-color .2s}
+.pager button:hover:not(:disabled){border-color:var(--gold)}
+.pager button[aria-current=page]{background:var(--grad-gold);border-color:transparent;color:#0A0A0A}
+.pager button:disabled{opacity:.4;cursor:default}
+.pager .dots{color:var(--muted);padding:0 4px}
+.fav-cta{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 18px;border-radius:var(--r);background:var(--ink-3);border:1px solid rgba(227,172,72,.4);color:#fff;margin-bottom:18px}
+
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  .btn-filters{display:inline-flex}
+  .filters{position:fixed;inset:0 auto 0 0;z-index:95;width:min(92vw,400px);max-height:none;background:var(--paper);padding:0 18px 90px;transform:translateX(-105%);transition:transform .35s var(--ease);top:0;box-shadow:var(--shadow-lg)}
+  .filters.on{transform:none}
+  .f-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--paper);padding:16px 0;z-index:2;border-bottom:1px solid var(--line)}
+  .f-head h3{margin:0;font-family:var(--font-display);font-style:italic;font-size:26px;text-transform:uppercase}
+  .f-apply{position:fixed;left:0;bottom:0;width:min(92vw,400px);padding:14px 18px calc(14px + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--line);display:flex;gap:10px}
+  .f-apply .btn{flex:1}
+  .f-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:94;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .f-bg.on{opacity:1;visibility:visible}
+}
+@media (min-width:981px){.f-apply,.f-bg{display:none}}
+@media (max-width:560px){
+  .wrap{padding-left:14px;padding-right:14px}
+  .toolbar{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
+  .tools{flex-wrap:nowrap}
+  .tools .select{flex:1;min-width:0;padding-left:12px;padding-right:28px;background-position:right 10px center}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .card-body{padding:10px 11px 12px;gap:4px}
+  .card-name{font-size:13px}
+  .card-tags{font-size:11.5px}
+  .card-cat{font-size:10.5px}
+  .price{font-size:20px}
+  .btn-det{display:none}
+  .fav{width:34px;height:34px;right:7px;top:7px}
+  .card-badges{left:7px;top:7px}
+  .bdg{font-size:10px;padding:3px 6px}
+  .toolbar .select{height:38px;font-size:13px}
+  .quick-grid{margin:0 -14px;padding-inline:14px}
+}
+
+/* =====================================================================
+   6. DETALLE DE PRODUCTO (modal)
+   ===================================================================== */
+dialog.pd{padding:0;border:0;width:min(1120px,calc(100vw - 32px));max-height:calc(100vh - 32px);border-radius:var(--r-lg);background:var(--card);color:var(--text);box-shadow:var(--shadow-lg);overflow:hidden}
+dialog.pd[open]{animation:zoomIn .3s var(--ease)}
+dialog.pd{border:1px solid rgba(227,172,72,.35)}
+dialog.pd::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(4px)}
+.pd-in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);max-height:calc(100vh - 32px)}
+.pd-close{position:absolute;right:14px;top:14px;z-index:5;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.95);color:#111;display:grid;place-items:center;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.gal{position:relative;background:#fff;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.stage{position:relative;flex:1;min-height:320px;aspect-ratio:1/1;max-height:calc(100vh - 150px);overflow:hidden;cursor:zoom-in;touch-action:pan-y;user-select:none}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .25s ease,opacity .25s;will-change:transform}
+.stage.zoom{cursor:zoom-out;touch-action:none}
+.stage.zoom img{transform:scale(2.4)}
+.stage .nav-a{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);color:#111;display:grid;place-items:center;box-shadow:0 2px 12px rgba(0,0,0,.14);z-index:2;transition:opacity .2s}
+.stage .prev{left:12px}.stage .next{right:12px}
+.stage.zoom .nav-a{opacity:0;pointer-events:none}
+.stage .cnt{position:absolute;left:12px;bottom:12px;padding:5px 10px;border-radius:999px;background:rgba(10,13,18,.75);color:#fff;font-size:12px;z-index:2}
+.stage .zhint{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:999px;background:rgba(10,13,18,.75);color:#fff;font-size:12px;display:flex;gap:6px;align-items:center;z-index:2}
+.stage .zhint .ico{width:14px;height:14px}
+.thumbs{display:flex;gap:8px;padding:12px;overflow-x:auto;scrollbar-width:thin;border-top:1px solid #eee}
+.thumbs button{flex:none;width:64px;height:64px;border-radius:10px;border:2px solid #eee;overflow:hidden;background:#fff;transition:border-color .2s}
+.thumbs button[aria-current=true]{border-color:var(--gold)}
+.thumbs img{width:100%;height:100%;object-fit:contain}
+.info{padding:30px 30px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--muted);padding-right:44px}
+.crumbs button:hover{color:var(--gold);text-decoration:underline}
+.info h2{margin:0;font-size:24px;line-height:1.25;font-weight:700}
+.info .price{font-size:42px;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.info .price small{-webkit-text-fill-color:var(--muted)}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0;font-size:14px;padding:16px;border-radius:var(--r);background:var(--ink-2);border:1px solid var(--line)}
+.specs dt{color:var(--muted)}
+.specs dd{margin:0;font-weight:600}
+.specs dd button{text-decoration:underline;text-decoration-color:rgba(227,172,72,.6);text-underline-offset:3px}
+.specs dd button:hover{color:var(--gold-1)}
+.pd-ctas{display:grid;grid-template-columns:1fr auto auto;gap:10px}
+.pd-ctas .btn{height:50px}
+.pd-ctas .sq{width:50px;padding:0}
+.pd-note{font-size:13px;color:var(--muted);margin:0;display:flex;gap:8px;align-items:flex-start}
+.pd-note .ico{width:17px;height:17px;flex:none;margin-top:1px}
+.rel h4{margin:6px 0 10px;font-family:var(--font-display);font-style:italic;text-transform:uppercase;font-size:20px;color:var(--gold-1)}
+.rel-row{display:grid;grid-auto-flow:column;grid-auto-columns:130px;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.rel-row{align-items:start}
+.rel-row button{display:block;text-align:left;font-size:12px;line-height:1.3}
+.rel-row .im{aspect-ratio:1/1;border-radius:10px;background:#fff;overflow:hidden;margin-bottom:6px}
+.rel-row img{width:100%;height:100%;object-fit:contain}
+.rel-row b{display:block;font-size:13px;margin-top:2px;color:var(--gold-1)}
+@media (max-width:860px){
+  dialog.pd{width:100vw;max-width:100vw;max-height:100dvh;height:100dvh;border-radius:0;margin:0}
+  .pd-in{grid-template-columns:minmax(0,1fr);overflow-y:auto;max-height:100dvh}
+  .gal{border-right:0}
+  .stage{max-height:none;flex:none}
+  .info{overflow:visible;padding:20px 18px 110px}
+  .info .price{font-size:34px}
+  .pd-ctas{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--ink-2);border-top:1px solid rgba(227,172,72,.35);z-index:4}
+}
+
+/* =====================================================================
+   7. FOOTER Y FLOTANTES
+   ===================================================================== */
+.foot{background:var(--ink);color:#a9a6ae;padding:56px 0 30px;font-size:14px;border-top:2px solid transparent;border-image:var(--grad-gold) 1}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px}
+.foot h5{color:var(--gold-1);font-family:var(--font-display);font-style:italic;font-size:18px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 14px}
+.foot ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.foot li button:hover,.foot a:hover{color:#fff}
+.foot .ship{display:flex;gap:12px;align-items:center;padding:14px;border-radius:var(--r);background:var(--ink-3);margin-top:14px;color:#dfe3e9}
+.foot .ship .ico{width:28px;height:28px;color:var(--gold)}
+.social{display:flex;gap:10px;margin-top:14px}
+.social a{width:42px;height:42px;border-radius:12px;background:var(--ink-3);display:grid;place-items:center;color:#fff;transition:background .2s}
+.social a:hover{background:var(--ink-line)}
+.foot-bottom{margin-top:40px;padding-top:22px;border-top:1px solid var(--ink-line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:#7f8896}
+@media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid>div:first-child{grid-column:1/-1}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.fab a,.fab button{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.25);transition:transform .2s var(--ease),opacity .3s}
+.fab a:hover,.fab button:hover{transform:scale(1.06)}
+.fab .ig{background:linear-gradient(45deg,var(--ig1),var(--ig2) 55%,var(--ig3));color:#fff}
+.fab .ig .ico{width:26px;height:26px}
+.fab .top{background:var(--ink-3);color:var(--gold);border:1px solid rgba(227,172,72,.5);width:44px;height:44px;opacity:0;pointer-events:none}
+.fab .top.on{opacity:1;pointer-events:auto}
+.toast{position:fixed;left:50%;bottom:28px;z-index:200;transform:translate(-50%,30px);opacity:0;background:var(--ink-3);border:1px solid var(--gold);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;box-shadow:var(--shadow-lg);transition:transform .3s var(--ease),opacity .3s;pointer-events:none;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.load-err{max-width:620px;margin:40px auto;padding:28px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.load-err code{background:var(--ink-3);color:var(--gold-1);padding:2px 6px;border-radius:6px}
+
+@keyframes pop{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes zoomIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes shimmer{to{background-position:-200% 0}}
+@keyframes tick{to{transform:translateX(-50%)}}
+@keyframes beat{50%{transform:scale(1.25)}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(227,172,72,.6)}80%,100%{box-shadow:0 0 0 10px rgba(227,172,72,0)}}
+@keyframes float{50%{transform:translateY(-10px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<!-- ===================== ICONOS (sprite SVG) ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 15 7-7 7 7"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 7h11v9H2zM13 10h4.5l3.5 3.5V16h-8z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+  <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 7.5 4 2.9-1.5 4.7h-5L8 10.4zM12 3v4.5M16 10.4l4.3-1.4M14.5 15.1l2.6 3.7M9.5 15.1l-2.6 3.7M8 10.4 3.7 9"/></symbol>
+  <symbol id="i-basket" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3.5 3.5 3.5 9.3 0 12.8M18.4 5.6c-3.5 3.5-3.5 9.3 0 12.8"/></symbol>
+  <symbol id="i-oval" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="6" transform="rotate(-35 12 12)"/><path d="m9 15 6-6M10 11l1.5 1.5M12 9.5l1.5 1.5M11.5 13l1.5 1.5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+  <symbol id="i-retro" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
+  <symbol id="i-kid" viewBox="0 0 24 24"><path d="M8 4 4 6.5l1.8 4L8 9.6V20h8V9.6l2.2.9 1.8-4L16 4c-.6 1.4-2.2 2.4-4 2.4S8.6 5.4 8 4z"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3 3 5.8l2 4.6 2.5-1V21h9V9.4l2.5 1 2-4.6L16 3c-.7 1.6-2.2 2.6-4 2.6S8.7 4.6 8 3z"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h13l-2.5 4L18 12H5"/><path d="M9 4v8M13 4v8"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 15a9 9 0 0 1 18 0zM12 6v3M3 15h18l-1 3H8"/></symbol>
+  <symbol id="i-jacket" viewBox="0 0 24 24"><path d="M8 3 4 5v15h5v-8M16 3l4 2v15h-5v-8M8 3l4 4 4-4M12 7v14"/></symbol>
+</svg>
+
+<!-- ===================== HEADER ===================== -->
+<div class="topbar"><div class="wrap">
+  <span><svg class="ico"><use href="#i-truck"/></svg> <b>Envíos a toda Colombia</b></span>
+  <span class="hide-m"><svg class="ico"><use href="#i-ig"/></svg> Pedidos y asesoría por Instagram <b>@golazo.oficial21</b></span>
+</div></div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-row">
+    <button class="icon-btn burger" id="btnMenu" aria-label="Abrir menú de categorías"><svg class="ico"><use href="#i-menu"/></svg></button>
+    <a class="logo" href="./" aria-label="Golazo Shop, inicio" id="logo">
+      <img class="mark" src="assets/favicon.png" alt="" width="54" height="54">
+      <img src="assets/logo-texto.png" alt="Golazo · Camisetas deportivas" width="230" height="57" onerror="this.remove();document.getElementById('logoTxt').hidden=false">
+      <span class="logo-txt" id="logoTxt" hidden>Gol<em>azo</em><small>Camisetas deportivas</small></span>
+    </a>
+    <div class="search" id="search" role="search">
+      <label class="search-box">
+        <svg class="ico"><use href="#i-search"/></svg>
+        <span class="sr">Buscar productos</span>
+        <input id="q" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search"
+          placeholder="Busca equipo, selección, jugador, año… ej: Real Madrid retro 2002"
+          aria-controls="sugs" aria-autocomplete="list" aria-expanded="false">
+        <button class="clear" id="qClear" type="button" aria-label="Borrar búsqueda"><svg class="ico"><use href="#i-x"/></svg></button>
+      </label>
+      <div class="sugs" id="sugs" role="listbox"></div>
+    </div>
+    <div class="hdr-actions">
+      <button class="icon-btn" id="btnFavs" aria-label="Ver mis favoritos"><svg class="ico"><use href="#i-heart"/></svg><span class="badge-n" id="favN">0</span></button>
+      <a class="btn btn-ig btn-sm hdr-ig" data-ig href="#" target="_blank" rel="noopener" aria-label="Instagram de Golazo Shop"><svg class="ico"><use href="#i-ig"/></svg><span class="lbl">Pedir por Instagram</span></a>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Categorías"><div class="wrap" style="position:relative"><ul class="nav-list" id="navList"></ul></div></nav>
+</header>
+
+<!-- Menú móvil -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-bg" data-close></div>
+  <aside class="drawer-panel" role="dialog" aria-label="Categorías">
+    <div class="drawer-head"><img src="assets/logo-texto.png" alt="Golazo" style="height:40px;width:auto">
+      <button class="icon-btn" data-close aria-label="Cerrar menú"><svg class="ico"><use href="#i-x"/></svg></button></div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+</div>
+
+<main id="main">
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <svg class="hero-pitch" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true">
+    <rect x="40" y="40" width="1120" height="520"/><path d="M600 40v520"/><circle cx="600" cy="300" r="90"/><circle cx="600" cy="300" r="4" fill="#fff"/>
+    <rect x="40" y="170" width="150" height="260"/><rect x="40" y="235" width="55" height="130"/><rect x="1010" y="170" width="150" height="260"/><rect x="1105" y="235" width="55" height="130"/>
+    <path d="M190 245a70 70 0 0 1 0 110M1010 245a70 70 0 0 0 0 110"/>
+  </svg>
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow"><i></i> Pasión en cada camiseta</span>
+      <h1 class="display">Tu camiseta <em>favorita</em>, a un mensaje.</h1>
+      <p class="lead" id="heroLead">Selecciones, clubes de todo el mundo, joyas retro, NBA, NFL y Fórmula 1. Encuentra la tuya, mira el precio y pídela por Instagram.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-accent" href="#catalogo">Explorar catálogo <svg class="ico"><use href="#i-right"/></svg></a>
+        <a class="btn btn-ghost" data-ig href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ig"/></svg> Escríbenos</a>
+      </div>
+      <div class="hero-stats" id="heroStats"></div>
+    </div>
+    <div class="hero-brand">
+      <div class="hero-ring"></div>
+      <div class="hero-logo"><img src="assets/logo.webp" alt="Golazo · Camisetas deportivas" width="720" height="720" fetchpriority="high" onerror="this.src='assets/logo.png'"></div>
+      <div class="mosaic" id="mosaic" aria-label="Productos destacados"></div>
+    </div>
+  </div>
+</section>
+<div class="ticker" id="ticker" aria-label="Equipos populares"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<!-- ===================== ACCESOS RÁPIDOS ===================== -->
+<section class="quick"><div class="wrap">
+  <div class="sec-title"><div><h2 class="display">Explora por categoría</h2><p>Atajos a lo más buscado de la tienda.</p></div></div>
+  <div class="quick-grid" id="quick"></div>
+</div></section>
+
+<!-- ===================== CATÁLOGO ===================== -->
+<section class="catalog" id="catalogo" aria-label="Catálogo de productos"><div class="wrap">
+  <div class="sec-title"><div><h2 class="display" id="catTitle">Catálogo</h2></div></div>
+  <div class="toolbar">
+    <p class="count" id="count" aria-live="polite">Cargando catálogo…</p>
+    <div class="tools">
+      <button class="btn btn-line btn-sm btn-filters" id="btnFilters"><svg class="ico"><use href="#i-filter"/></svg> Filtros <span id="fN"></span></button>
+      <label class="sr" for="sort">Ordenar por</label>
+      <select class="select" id="sort">
+        <option value="rel">Más relevantes</option>
+        <option value="nov">Novedades</option>
+        <option value="pasc">Precio: menor a mayor</option>
+        <option value="pdesc">Precio: mayor a menor</option>
+        <option value="az">Nombre: A–Z</option>
+        <option value="za">Nombre: Z–A</option>
+        <option value="ydesc">Año: más reciente</option>
+        <option value="yasc">Año: más antiguo</option>
+      </select>
+      <label class="sr" for="pp">Productos por página</label>
+      <select class="select" id="pp"><option value="24">24 / pág.</option><option value="48">48 / pág.</option><option value="96">96 / pág.</option></select>
+    </div>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div id="fixNote"></div>
+  <div class="layout">
+    <div class="f-bg" id="fBg"></div>
+    <aside class="filters" id="filters" aria-label="Filtros">
+      <div class="f-head"><h3>Filtros</h3><button class="icon-btn" style="color:var(--text)" id="fClose" aria-label="Cerrar filtros"><svg class="ico"><use href="#i-x"/></svg></button></div>
+      <button class="fav-toggle" id="favToggle" aria-pressed="false"><svg class="ico"><use href="#i-heart"/></svg> Solo mis favoritos <span class="sw"></span></button>
+      <div id="facets"></div>
+      <div class="f-apply"><button class="btn btn-line" id="fClear">Limpiar</button><button class="btn btn-dark" id="fApply">Ver productos</button></div>
+    </aside>
+    <div>
+      <div id="favCta"></div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <nav class="pager" id="pager" aria-label="Paginación"></nav>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="assets/logo-texto.png" alt="Golazo · Camisetas deportivas" width="230" height="57" style="height:56px;width:auto">
+        <p style="margin:14px 0 0;max-width:360px">Catálogo digital de camisetas y ropa deportiva. Consulta precios en pesos colombianos y haz tu pedido directamente por Instagram.</p>
+        <div class="ship"><svg class="ico"><use href="#i-truck"/></svg><div><b style="color:#fff">Envíos a toda Colombia</b><br><span style="font-size:13px">Coordina tu envío con nosotros por Instagram.</span></div></div>
+      </div>
+      <div><h5>Categorías</h5><ul id="footCats"></ul></div>
+      <div><h5>Explora</h5><ul id="footLinks"></ul></div>
+      <div>
+        <h5>Contacto y pedidos</h5>
+        <p style="margin:0 0 12px">Escríbenos por mensaje directo: te confirmamos tallas, disponibilidad y envío.</p>
+        <a class="btn btn-ig" data-ig href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ig"/></svg> @golazo.oficial21</a>
+        <div class="social" id="social"></div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="year"></span> Golazo Shop · Catálogo informativo, no es una tienda en línea.</span><span class="gold-txt" style="font-weight:600;letter-spacing:.18em;text-transform:uppercase">Pasión en cada camiseta</span></div>
+  </div>
+</footer>
+
+<div class="fab">
+  <button class="top" id="toTop" aria-label="Volver arriba"><svg class="ico"><use href="#i-up"/></svg></button>
+  <a class="ig" data-ig href="#" target="_blank" rel="noopener" aria-label="Contactar por Instagram"><svg class="ico"><use href="#i-ig"/></svg></a>
+</div>
+
+<dialog class="pd" id="pd" aria-labelledby="pdName"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   CONFIGURACIÓN GENERAL — edite aquí los datos de la tienda
+   ===================================================================== */
+const CONFIG = {
+  tienda: 'Golazo Shop',
+  instagram: 'https://www.instagram.com/golazo.oficial21/',
+  instagramUsuario: '@golazo.oficial21',
+  datos: 'data/catalogo.json',          // generado por herramientas/actualizar_catalogo.py
+  porPagina: [24, 48, 96],
+  redes: { facebook: '', tiktok: '', whatsapp: '' },   // deje vacío para ocultar
+  claveFavoritos: 'golazo:favoritos',
+};
+
+/* =====================================================================
+   DICCIONARIOS Y PARSER INTELIGENTE DE NOMBRES
+   Extrae equipo, año, temporada, tipo, versión, público y prenda del
+   nombre original (que nunca se modifica). Para enseñar un alias nuevo
+   basta con agregarlo a estas tablas.
+   ===================================================================== */
+const N = s => (s == null ? '' : String(s)).normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .toLowerCase().replace(/[’'`´~]/g, '').replace(/&/g, ' y ').replace(/[^a-z0-9]+/g, ' ').trim();
+
+/* Códigos/abreviaturas del Excel → nombre completo + alias de búsqueda */
+const EQUIPOS = {
+  'rm': ['Real Madrid', 'real madrid merengue madridista'],
+  'ba': ['FC Barcelona', 'barcelona barca fcb blaugrana culé'],
+  'm utd': ['Manchester United', 'manchester united man utd man u mu red devils'],
+  'ars': ['Arsenal', 'arsenal gunners'],
+  'liv': ['Liverpool', 'liverpool lfc reds'], 'lfc': ['Liverpool', 'liverpool lfc reds'],
+  'cfc': ['Chelsea', 'chelsea blues'],
+  'th fc': ['Tottenham Hotspur', 'tottenham spurs hotspur'],
+  'man city': ['Manchester City', 'manchester city man city mci citizens'],
+  'newcastle': ['Newcastle United', 'newcastle magpies'],
+  'west ham': ['West Ham United', 'west ham hammers'],
+  'leeds utd': ['Leeds United', 'leeds united'],
+  'bfc': ['Bayern Múnich', 'bayern munich munchen fc bayern'],
+  'bvb': ['Borussia Dortmund', 'borussia dortmund bvb'],
+  'leverkusen': ['Bayer Leverkusen', 'bayer leverkusen'],
+  'ac': ['AC Milan', 'ac milan milan rossoneri'],
+  'in milan': ['Inter de Milán', 'inter milan internazionale nerazzurri'],
+  'juv': ['Juventus', 'juventus juve'],
+  'acf fc': ['Fiorentina', 'fiorentina viola'],
+  'napoli': ['Napoli', 'napoli napoles'], 'roma': ['AS Roma', 'roma as roma'],
+  'lazio': ['Lazio', 'lazio'], 'parma': ['Parma', 'parma'], 'venezia': ['Venezia', 'venezia venecia'],
+  'psg': ['Paris Saint-Germain', 'psg paris saint germain paris sg'],
+  'ms': ['Olympique de Marsella', 'marseille marsella olympique om'],
+  'lyon': ['Olympique de Lyon', 'lyon olympique lyonnais ol'],
+  'atm': ['Atlético de Madrid', 'atletico madrid atleti colchonero'],
+  'r bts': ['Real Betis', 'real betis betis'],
+  'svl fc': ['Sevilla FC', 'sevilla'],
+  'bilbao at': ['Athletic Club', 'athletic bilbao athletic club'],
+  'valencia cf': ['Valencia CF', 'valencia'],
+  'at mineiro': ['Atlético Mineiro', 'atletico mineiro galo'],
+  'sao paulo': ['São Paulo', 'sao paulo'], 'gremio': ['Grêmio', 'gremio'],
+  'vasco': ['Vasco da Gama', 'vasco da gama'], 'flamengo': ['Flamengo', 'flamengo mengao'],
+  'palmeiras': ['Palmeiras', 'palmeiras verdao'], 'corinthians': ['Corinthians', 'corinthians timao'],
+  'santos': ['Santos', 'santos'], 'botafogo': ['Botafogo', 'botafogo'], 'cruzeiro': ['Cruzeiro', 'cruzeiro'],
+  'fluminense': ['Fluminense', 'fluminense'],
+  /* NBA */
+  'rockets': ['Houston Rockets', 'houston rockets'], 'okc thunder': ['Oklahoma City Thunder', 'oklahoma city thunder okc'],
+  'trail blazers': ['Portland Trail Blazers', 'portland trail blazers'], 'lakers': ['Los Angeles Lakers', 'los angeles lakers la lakers'],
+  'bulls': ['Chicago Bulls', 'chicago bulls'], 'celtics': ['Boston Celtics', 'boston celtics'],
+  'warriors': ['Golden State Warriors', 'golden state warriors gsw'], 'miami heat': ['Miami Heat', 'miami heat'],
+  'magic': ['Orlando Magic', 'orlando magic'], '76ers': ['Philadelphia 76ers', 'philadelphia 76ers sixers'],
+  'cleveland': ['Cleveland Cavaliers', 'cleveland cavaliers cavs'], 'clippers': ['LA Clippers', 'los angeles clippers'],
+  'nets': ['Brooklyn Nets', 'brooklyn nets'], 'timberwolves': ['Minnesota Timberwolves', 'minnesota timberwolves wolves'],
+  'ny knicks': ['New York Knicks', 'new york knicks'], 'grizzlies': ['Memphis Grizzlies', 'memphis grizzlies'],
+  'suns': ['Phoenix Suns', 'phoenix suns'], 'hornets': ['Charlotte Hornets', 'charlotte hornets'],
+  'bucks': ['Milwaukee Bucks', 'milwaukee bucks'], 'shohoku': ['Shohoku', 'shohoku slam dunk'],
+  'mavericks': ['Dallas Mavericks', 'dallas mavericks mavs'], 'raptors': ['Toronto Raptors', 'toronto raptors'],
+  'nuggets': ['Denver Nuggets', 'denver nuggets'], 'jazz': ['Utah Jazz', 'utah jazz'], 'kings': ['Sacramento Kings', 'sacramento kings'],
+  'pistons': ['Detroit Pistons', 'detroit pistons'], 'pacers': ['Indiana Pacers', 'indiana pacers'], 'hawks': ['Atlanta Hawks', 'atlanta hawks'],
+  'pelicans': ['New Orleans Pelicans', 'new orleans pelicans'], 'wizards': ['Washington Wizards', 'washington wizards'],
+  'spurs': ['San Antonio Spurs', 'san antonio spurs'],
+  /* clubes frecuentes con nombre corto */
+  'boca': ['Boca Juniors', 'boca juniors xeneize'], 'boca junior': ['Boca Juniors', 'boca juniors xeneize'],
+  'boca juniors': ['Boca Juniors', 'boca juniors xeneize'], 'river plate': ['River Plate', 'river plate millonarios'],
+  'club america': ['Club América', 'club america aguilas'], 'chivas': ['Chivas', 'chivas guadalajara rebano'],
+  'celtic': ['Celtic', 'celtic glasgow'], 'benfica': ['Benfica', 'benfica'], 'porto': ['FC Porto', 'porto fc porto'],
+  'ajax': ['Ajax', 'ajax amsterdam'], 'inter miami': ['Inter Miami', 'inter miami messi'],
+};
+/* Marcas (no son equipos) */
+const MARCAS = {
+  'ad': ['Adidas', 'adidas'], 'nk': ['Nike', 'nike'], 'ua': ['Under Armour', 'under armour'],
+  'pm': ['Puma', 'puma'], 'alo': ['Alo', 'alo yoga'], 'arc teryx': ["Arc'teryx", 'arcteryx arc teryx'],
+  'the north face': ['The North Face', 'north face tnf'], 'jordan': ['Jordan', 'jordan air jordan'],
+  'mizuno': ['Mizuno', 'mizuno'], 'umbro': ['Umbro', 'umbro'], 'anta': ['Anta', 'anta'],
+  'mitchell ness': ['Mitchell & Ness', 'mitchell ness'],
+};
+/* Países EN → ES (selecciones) */
+const PAISES = {
+  'argentina': 'Argentina', 'brazil': 'Brasil', 'colombia': 'Colombia', 'mexico': 'México', 'japan': 'Japón',
+  'germany': 'Alemania', 'england': 'Inglaterra', 'spain': 'España', 'france': 'Francia', 'italy': 'Italia',
+  'portugal': 'Portugal', 'scotland': 'Escocia', 'wales': 'Gales', 'ireland': 'Irlanda', 'croatia': 'Croacia',
+  'belgium': 'Bélgica', 'denmark': 'Dinamarca', 'nl': 'Países Bajos', 'netherlands': 'Países Bajos',
+  'holland': 'Países Bajos', 'palestine': 'Palestina', 'south korea': 'Corea del Sur', 'korea': 'Corea del Sur',
+  'usa': 'Estados Unidos', 'us': 'Estados Unidos', 'u s': 'Estados Unidos', 'u s a': 'Estados Unidos', 'united states': 'Estados Unidos', 'canada': 'Canadá',
+  'chile': 'Chile', 'peru': 'Perú', 'uruguay': 'Uruguay', 'ecuador': 'Ecuador', 'paraguay': 'Paraguay',
+  'venezuela': 'Venezuela', 'bolivia': 'Bolivia', 'costa rica': 'Costa Rica', 'jamaica': 'Jamaica',
+  'honduras': 'Honduras', 'panama': 'Panamá', 'guatemala': 'Guatemala', 'el salvador': 'El Salvador',
+  'cuba': 'Cuba', 'haiti': 'Haití', 'turkey': 'Turquía', 'turkiye': 'Turquía', 'sweden': 'Suecia',
+  'norway': 'Noruega', 'switzerland': 'Suiza', 'poland': 'Polonia', 'russia': 'Rusia', 'ukraine': 'Ucrania',
+  'austria': 'Austria', 'greece': 'Grecia', 'serbia': 'Serbia', 'czech': 'República Checa', 'hungary': 'Hungría',
+  'romania': 'Rumania', 'bulgaria': 'Bulgaria', 'finland': 'Finlandia', 'iceland': 'Islandia',
+  'northern ireland': 'Irlanda del Norte', 'yugoslavia': 'Yugoslavia', 'soviet union': 'Unión Soviética',
+  'ussr': 'Unión Soviética', 'cameroon': 'Camerún', 'morocco': 'Marruecos', 'algeria': 'Argelia',
+  'nigeria': 'Nigeria', 'ghana': 'Ghana', 'senegal': 'Senegal', 'south africa': 'Sudáfrica', 'egypt': 'Egipto',
+  'tunisia': 'Túnez', 'ivory coast': 'Costa de Marfil', 'cote divoire': 'Costa de Marfil', 'mali': 'Malí',
+  'congo': 'Congo', 'saudi arabia': 'Arabia Saudita', 'qatar': 'Catar', 'iran': 'Irán', 'iraq': 'Irak',
+  'china': 'China', 'india': 'India', 'australia': 'Australia', 'new zealand': 'Nueva Zelanda',
+  'thailand': 'Tailandia', 'vietnam': 'Vietnam', 'indonesia': 'Indonesia', 'jordan': 'Jordania',
+  'uae': 'Emiratos Árabes', 'israel': 'Israel', 'lebanon': 'Líbano', 'syria': 'Siria',
+};
+/* Alias adicionales de selecciones (todas las claves en inglés se agregan solas) */
+const PAIS_EXTRA = { 'Países Bajos': 'holanda', 'Estados Unidos': 'eeuu usa', 'Inglaterra': 'england', 'Corea del Sur': 'corea',
+  'Brasil': 'canarinha', 'Argentina': 'albiceleste', 'Colombia': 'tricolor', 'México': 'tri', 'España': 'la roja', 'Italia': 'azzurra' };
+const PAIS_ALIAS = (() => { const m = {}; for (const [en, es] of Object.entries(PAISES)) m[es] = (m[es] || N(es)) + ' ' + en;
+  for (const [es, x] of Object.entries(PAIS_EXTRA)) m[es] = (m[es] || N(es)) + ' ' + x; return m; })();
+const CATEGORIAS = {
+  'futbol': ['Fútbol', 'futbol soccer football balompie'], 'nfl': ['Fútbol americano', 'nfl futbol americano american football'],
+  'nba': ['Baloncesto NBA', 'nba baloncesto basketball basket basquet basquetbol'],
+  'baloncesto': ['Baloncesto', 'baloncesto basketball basket basquet basquetbol'],
+  'casual lifestyle': ['Moda urbana', 'casual lifestyle moda urbano streetwear'],
+  'rugby': ['Rugby', 'rugby'], 'f1': ['Fórmula 1', 'f1 formula 1 formula uno automovilismo carreras'],
+  'mlb': ['Béisbol', 'mlb beisbol baseball'],
+};
+/* Secciones = primer nivel de ruta_categoria */
+const SECCIONES = {
+  'national teams': ['Selecciones', 'seleccion selecciones national team mundial'],
+  'premier league': ['Premier League', 'premier league inglaterra epl'],
+  'spain la liga': ['La Liga', 'la liga liga espanola espana'],
+  'italy serie a': ['Serie A', 'serie a italia calcio'],
+  'bundesliga': ['Bundesliga', 'bundesliga alemania'],
+  'france ligue 1': ['Ligue 1', 'ligue 1 liga francesa francia'],
+  'brazil': ['Fútbol brasileño', 'brasileirao brasil brazil'],
+  'mexico liga mls': ['Liga MX / MLS', 'liga mx mexico mls'],
+  'other teams': ['Otras ligas', 'otras ligas'],
+  'training tracksuit': ['Entrenamiento', 'entrenamiento training sudadera'],
+  'windbreaker': ['Rompevientos', 'rompevientos windbreaker'],
+  'jacket tracksuit': ['Chaquetas', 'chaqueta jacket'],
+  'shorts pants': ['Pantalonetas', 'pantaloneta shorts'],
+  'sock': ['Medias', 'medias sock'], 'trousers': ['Pantalones', 'pantalon trousers'],
+  'classic fashion': ['Clásico y moda', 'clasico moda fashion'],
+  'patch and fonts': ['Parches y estampados', 'parche patch estampado fuente'],
+  'nfl': ['Camisetas NFL', 'nfl'], 'nba': ['Camisetas NBA', 'nba'],
+  'f1': ['Fórmula 1', 'f1 formula 1'], 'rugby': ['Rugby', 'rugby'], 'mlb': ['Béisbol MLB', 'mlb beisbol'],
+};
+/* Subcategorías genéricas: el equipo se toma del nombre del producto */
+const SUB_ETIQUETA = {
+  'other team': 'Otros equipos', 'other': 'Otros', 'asia club': 'Clubes de Asia', 'argentina': 'Clubes de Argentina',
+  'chile': 'Clubes de Chile', 'portugal': 'Clubes de Portugal', 'scottish': 'Clubes de Escocia',
+  'asia': 'Asia', 'europe': 'Europa', 'africa': 'África', 'all star': 'All-Star',
+  'europe other team': 'Europa · otras', 'america other team': 'América · otras', 'asia other team': 'Asia · otras',
+  'america u s y canada': 'EE. UU. y Canadá', 'mexico liga': 'Liga MX', 'mls': 'MLS',
+  'parches varios': 'Parches varios', 'fuentes nombres': 'Fuentes / Nombres', 'f1': 'Fórmula 1', 'mlb': 'MLB',
+};
+const SUB_GENERICAS = new Set(['other team', 'other', 'asia club', 'argentina', 'chile', 'portugal', 'scottish',
+  'asia', 'europe', 'africa', 'europe other team', 'america other team', 'asia other team', 'america u s y canada',
+  'mexico liga', 'mls', 'turkiye super lig', 'f1', 'rugby', 'mlb', 'all star', 'fifa', 'uefa', 'conmebol',
+  'premier league', 'brasileirao', 'ligue 1', 'serie a', 'bundesliga', 'la liga', 'parches varios', 'fuentes nombres', '']);
+
+/* Atributos: [etiqueta, regex sobre nombre normalizado, sinónimos de búsqueda] */
+const TIPOS = [
+  ['Portero', /\b(goalkeeper|gk|goal keeper)\b/, 'portero arquero guardameta goalkeeper gk'],
+  ['Local', /\bhome\b/, 'local casa titular home primera'],
+  ['Visitante', /\baway\b/, 'visitante away suplente segunda'],
+  ['Tercera', /\bthird\b/, 'tercera third alternativa 3ra'],
+  ['Cuarta', /\bfourth\b/, 'cuarta fourth'],
+  ['Entrenamiento', /\btraining\b/, 'entrenamiento training entreno'],
+  ['Prepartido', /\bpre ?match\b/, 'prepartido pre match calentamiento'],
+  ['Edición especial', /\b(special edition|limited|special)\b/, 'edicion especial limitada special'],
+  ['Aniversario', /\b(anniversary|\d+th)\b/, 'aniversario anniversary'],
+  ['Concepto', /\bconcept\b/, 'concepto concept'],
+];
+const VERSIONES = [
+  ['Retro', n => /\bretro\b/.test(n) && !/\bretro style\b/.test(n), 'retro clasica clasico vintage historica antigua'],
+  ['Estilo retro', n => /\bretro style\b/.test(n), 'estilo retro retro style'],
+  ['Versión jugador', n => /\bplayer\b/.test(n), 'version jugador player pro'],
+  ['Versión hincha', n => /\bfans?\b/.test(n), 'version hincha fan fans aficionado'],
+  ['Manga larga', n => /\blong sleeve/.test(n), 'manga larga long sleeve'],
+  ['Sin mangas', n => /\b(vest|tank top|sleeveless)\b/.test(n), 'sin mangas esqueleto vest'],
+];
+const PUBLICOS = [
+  ['Bebé', n => /\bbaby\b(?! (blue|pink))/.test(n), 'bebe baby'],
+  ['Niños', n => /\b(kids?|youth|children)\b/.test(n), 'nino ninos nina infantil kids junior'],
+  ['Mujer', n => /\b(women|womens|woman|girl|ladies)\b/.test(n), 'mujer dama femenina women'],
+  ['Hombre', n => /\b(men|mens)\b/.test(n), 'hombre caballero men'],
+];
+const PRENDAS = [
+  ['Parches y estampados', /\b(patch|patches|font|fonts)\b/, 'parche parches estampado fuente patch'],
+  ['Medias', /\bsocks?\b/, 'medias calcetines sock'],
+  ['Rompevientos', /\bwindbreaker\b/, 'rompevientos cortavientos windbreaker'],
+  ['Sudaderas y conjuntos', /\b(tracksuit|track suit|a set|suit|kit)\b/, 'sudadera conjunto tracksuit chandal set kit uniforme'],
+  ['Buzos', /\b(hoody|hoodie|sweater|sweatshirt|pullover)\b/, 'buzo saco hoodie capota sweater'],
+  ['Chaquetas', /\b(jacket|coat)\b/, 'chaqueta chompa jacket campera'],
+  ['Pantalonetas', /\b(shorts|short pants)\b/, 'pantaloneta short shorts'],
+  ['Pantalones', /\b(pants|trousers|jogger)\b/, 'pantalon pants trousers jogger'],
+  ['Polos', /\bpolo\b/, 'polo'],
+  ['Camisetas casuales', /\b(t shirt|tee|cotton)\b/, 'camiseta casual algodon t shirt'],
+  ['Camisetas', /\b(jersey|jerseys|shirt|vest)\b/, 'camiseta camisa jersey casaca remera playera'],
+];
+const STOP_EQUIPO = new Set(('home away third fourth goalkeeper gk goal retro fans fan player special training kids kid ' +
+  'youth women womens woman men mens girl ladies long short sleeve sleeveless jersey jerseys soccer edition anniversary ' +
+  'concept commemorative pre prematch match x vs quality polo t shirt tshirt tee vest shorts pants trousers sock socks ' +
+  'windbreaker jacket tracksuit track sweater sweatshirt hoody hoodie suit baby set kit cotton style version classic ' +
+  'casual nfl nba mlb limited champions cup patch font fonts print printed zipper reversible double layer leisure ' +
+  'white black blue red green yellow pink purple grey gray orange navy royal light dark sapphire khaki brown gold golden ' +
+  'silver beige cream lake lavender burgundy maroon wine sky claret cyan teal turquoise apricot coffee camouflage camo ' +
+  'multicolor rose violet lilac mint olive ivory champagne fluorescent neon off a the with and edicion pure stars ' +
+  'world mundial tracksuits jackets uniform training pullover coat outdoor rugby velvet thickened').split(' '));
+
+const COLORES = new Set('red white black blue green yellow orange royal gold'.split(' '));
+const IDX_ALIAS = (() => { // alias normalizado → [display, aliases]
+  const m = new Map();
+  for (const [k, v] of Object.entries(EQUIPOS)) { m.set(k, v); m.set(N(v[0]), v); }
+  return m;
+})();
+
+function etiquetaSub(raw) {
+  const k = N(String(raw).replace(/^0+/, ''));
+  if (SUB_ETIQUETA[k]) return SUB_ETIQUETA[k];
+  if (EQUIPOS[k]) return EQUIPOS[k][0];
+  if (MARCAS[k]) return MARCAS[k][0];
+  if (raw.includes('>')) { const u = N(raw.split('>').pop()); return PAISES[u] || raw.split('>').pop().trim(); }
+  return String(raw).replace(/^0+/, '').trim() || 'Sin subcategoría';
+}
+function seccionDe(ruta) {
+  const partes = String(ruta || '').split('>').map(s => s.trim()).filter(Boolean);
+  if (!partes.length) return '';
+  return N(partes[0]) === 'f1 y rugby y mlb' && partes[1] ? partes[1] : partes[0];
+}
+function etiquetaSeccion(sec) { const v = SECCIONES[N(sec)]; return v ? v[0] : sec; }
+
+function temporadaDe(nombre) {
+  const m = String(nombre).match(/(?:^|[\s(])((?:19|20)\d{2})(?:\s*[\/-]\s*(\d{4}|\d{2}))?(?=$|[\s)\-,])/);
+  if (!m) return null;
+  const y1 = +m[1]; let label = m[1], y2 = null;
+  if (m[2]) { y2 = m[2].length === 4 ? +m[2] : Math.floor(y1 / 100) * 100 + +m[2]; if (y2 < y1) y2 += 100;
+    label = `${m[1]}/${m[2].length === 4 ? m[2].slice(2) : m[2]}`; }
+  return { y1, y2, label };
+}
+function jugadorDe(nombre) {
+  const m = String(nombre).match(/\b([A-Z][A-Z.'\- ]{1,30}?)\s*#\s?(\d{1,2})\b/);
+  return m ? `${m[1].trim()} #${m[2]}` : null;
+}
+function equipoDelNombre(nombre) {
+  let s = String(nombre).replace(/\([^)]*\)?/g, ' ');
+  s = s.replace(/^\s*(?:19|20)\d{2}(?:\s*[\/-]\s*\d{2,4})?\s+/, '');
+  s = s.replace(/\b[A-Z][A-Z.'\- ]{1,30}?\s*#\s?\d{1,2}\b/, ' ').replace(/#\s?\w+/g, ' ');
+  const out = [], toks = s.split(/\s+/).filter(Boolean);
+  for (let i = 0; i < toks.length; i++) {
+    const raw = toks[i], t = N(raw);
+    if (!t) continue;
+    if (raw === '1:1') break;
+    if (out.some(w => /[a-z]/.test(w)) && /^[A-ZÀ-Ý.'\-]{3,}$/.test(raw)) break;   // apellido en mayúsculas
+    if (/^\d+(st|nd|rd|th)?$/.test(t)) { if (out.length) break; continue; }
+    if (STOP_EQUIPO.has(t)) {
+      const sig = N(toks[i + 1] || '');            // "Red Bull", "Orange County"…
+      if (out.length || !COLORES.has(t) || !sig || STOP_EQUIPO.has(sig)) break;
+    }
+    out.push(raw.replace(/[~,]+$/g, ''));
+    if (out.length >= 5) break;
+  }
+  const txt = out.join(' ').trim();
+  return txt.length >= 2 ? txt : null;
+}
+function canonEquipo(txt) {
+  if (!txt) return null;
+  const k = N(txt);
+  if (MARCAS[k]) return { marca: MARCAS[k] };
+  if (IDX_ALIAS.has(k)) { const v = IDX_ALIAS.get(k); return { n: v[0], a: v[1] }; }
+  if (PAISES[k]) return { n: PAISES[k], a: `${PAIS_ALIAS[PAISES[k]]} seleccion`, pais: true };
+  return { n: txt, a: k };
+}
+
+/* Analiza un producto crudo y devuelve los atributos derivados */
+function analizar(nombre, cat, sub, ruta) {
+  const n = N(nombre), subK = N(String(sub).replace(/^0+/, ''));
+  const temp = temporadaDe(nombre);
+  let eq = null, marca = null;
+  if (sub && sub.includes('>') && !SUB_GENERICAS.has(subK)) {
+    const ultimo = N(sub.split('>').pop());
+    if (ultimo !== 'other team') eq = canonEquipo(sub.split('>').pop().trim());
+  } else if (!SUB_GENERICAS.has(subK) && !subK.includes(' y ')) {
+    eq = canonEquipo(String(sub).replace(/^0+/, ''));
+  }
+  if (eq && eq.marca) { marca = eq.marca; eq = null; }
+  const sinEquipo = /^(casual lifestyle|baloncesto)$/.test(N(cat)) || N(seccionDe(ruta)) === 'patch and fonts';
+  if (!eq && !sinEquipo) { const c = canonEquipo(equipoDelNombre(nombre)); if (c && c.marca) marca = marca || c.marca; else eq = c; }
+  if (eq && eq.n.length > 40) eq = null;
+  const catK = N(cat);
+  if (eq && N(eq.n) === catK) eq = null;
+  const tipos = TIPOS.filter(t => t[1].test(n));
+  const vers = VERSIONES.filter(v => v[1](n));
+  const pubs = PUBLICOS.filter(p => p[1](n));
+  const pren = PRENDAS.find(p => p[1].test(n));
+  const sec = seccionDe(ruta);
+  const secV = SECCIONES[N(sec)], catV = CATEGORIAS[catK];
+  const jug = jugadorDe(nombre);
+  const hay = [n, eq && N(eq.n), eq && N(eq.a), marca && N(marca[1]), catK, catV && catV[1], N(sec), secV && secV[1],
+    N(sub), N(etiquetaSub(sub)), ...tipos.map(t => t[2]), ...vers.map(v => v[2]), ...pubs.map(p => p[2]),
+    pren ? pren[2] : '', temp ? `${temp.y1} ${temp.y2 || ''} ${String(temp.y1).slice(2)} ${temp.y2 ? String(temp.y2).slice(2) : ''}` : '',
+    jug ? N(jug) : ''].filter(Boolean).join(' ');
+  return {
+    temp, equipo: eq ? eq.n : null, marca: marca ? marca[0] : null, jugador: jug,
+    tipos: tipos.map(t => t[0]), versiones: vers.map(v => v[0]), publicos: pubs.map(p => p[0]),
+    prenda: pren ? pren[0] : 'Otros', seccion: sec, hay: ' ' + hay.replace(/\s+/g, ' ') + ' ', nombreN: ' ' + n + ' ',
+  };
+}
+
+
+/* =====================================================================
+   UTILIDADES
+   ===================================================================== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtCOP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+const precio = n => fmtCOP.format(n);
+const fmtN = new Intl.NumberFormat('es-CO');
+const coll = new Intl.Collator('es', { sensitivity: 'base', numeric: true });
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const icon = (id, cls = '') => `<svg class="ico ${cls}"><use href="#i-${id}"/></svg>`;
+const encPath = p => String(p).split('/').map(encodeURIComponent).join('/');
+const PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#F3F2EE"/><path d="M150 95 92 127l24 54 30-12v136h108V169l30 12 24-54-58-32c-8 18-26 30-50 30s-42-12-50-30z" fill="none" stroke="#C9C6BD" stroke-width="8" stroke-linejoin="round"/><text x="200" y="345" text-anchor="middle" font-family="Arial" font-size="20" fill="#9A968C">Foto no disponible</text></svg>`);
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 3200); }
+function copiar(txt) { // síncrono: funciona dentro del clic, antes de abrir Instagram
+  let ok = false;
+  const host = document.querySelector('dialog[open]') || document.body;
+  const ta = document.createElement('textarea'); ta.value = txt; ta.readOnly = true;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+  host.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, txt.length);
+  try { ok = document.execCommand('copy'); } catch {}
+  ta.remove();
+  if (!ok && navigator.clipboard) { navigator.clipboard.writeText(txt).catch(() => {}); ok = true; }
+  return ok;
+}
+
+/* =====================================================================
+   DATOS
+   ===================================================================== */
+const DB = { P: [], byId: new Map(), img: { modo: 'ninguno' }, maxY: 0, temporadaNueva: null, facetas: {} };
+
+function fotosDe(p) {
+  const I = DB.img;
+  if (I.modo === 'optimizado') return Array.from({ length: p.fotos || 0 }, (_, i) =>
+    ({ m: `${I.mini}${encodeURIComponent(p.id)}/${i + 1}.webp`, g: `${I.full}${encodeURIComponent(p.id)}/${i + 1}.webp` }));
+  if (I.modo === 'original' && Array.isArray(p.fotos) && p.carpeta) {
+    const base = (I.base || '') + encPath(p.carpeta) + '/';
+    return p.fotos.map(f => { const u = base + encodeURIComponent(f); return { m: u, g: u }; });
+  }
+  return [];
+}
+
+function construir(json) {
+  DB.img = json.img || { modo: 'ninguno' };
+  const C = json.cat, S = json.sub, R = json.ruta;
+  DB.P = json.p.map((r, i) => {
+    const [id, ci, si, ri, nombre, pr, carpeta, fotos] = r;
+    const cat = C[ci], sub = S[si], ruta = R[ri];
+    const a = analizar(nombre, cat, sub, ruta);
+    const p = { i, id, cat, sub, ruta, nombre, precio: pr, carpeta, fotos, ...a };
+    p.nFotos = DB.img.modo === 'optimizado' ? (fotos || 0) : (Array.isArray(fotos) ? fotos.length : 0);
+    if (p.temp && p.temp.y1 > DB.maxY) DB.maxY = p.temp.y1;
+    return p;
+  });
+  DB.byId = new Map(DB.P.map(p => [p.id, p]));
+  // temporada "nueva" = la más frecuente entre los dos años más recientes
+  const cuenta = new Map();
+  for (const p of DB.P) if (p.temp && p.temp.y1 >= DB.maxY - 1) cuenta.set(p.temp.label, (cuenta.get(p.temp.label) || 0) + 1);
+  DB.temporadaNueva = [...cuenta].sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  for (const p of DB.P) {
+    p.nuevo = !!(p.temp && p.temp.y1 >= DB.maxY - 1);
+    p.fv = {};
+    for (const f of FACETAS) p.fv[f.k] = f.get(p);
+  }
+}
+
+/* =====================================================================
+   FACETAS (filtros) — se generan a partir de los datos
+   ===================================================================== */
+const FACETAS = [
+  { k: 'cat', t: 'Categoría', get: p => [p.cat], label: v => { const c = CATEGORIAS[N(v)]; return c && N(c[0]) !== N(v) ? `${v} · ${c[0]}` : v; }, abierta: true },
+  { k: 'sec', t: 'Sección', get: p => p.seccion ? [p.seccion] : [], label: etiquetaSeccion, abierta: true },
+  { k: 'sub', t: 'Subcategoría', get: p => p.sub ? [p.sub] : [], label: etiquetaSub, buscar: true },
+  { k: 'eq', t: 'Equipo / selección', get: p => p.equipo ? [p.equipo] : [], buscar: true, abierta: true },
+  { k: 'prenda', t: 'Tipo de prenda', get: p => [p.prenda] },
+  { k: 'tipo', t: 'Tipo de camiseta', get: p => p.tipos },
+  { k: 'ver', t: 'Versión y estilo', get: p => p.versiones },
+  { k: 'pub', t: 'Público', get: p => p.publicos },
+  { k: 'anio', t: 'Año', get: p => p.temp ? [String(p.temp.y1)] : [], num: true, buscar: true },
+  { k: 'temp', t: 'Temporada', get: p => p.temp ? [p.temp.label] : [], num: true, buscar: true },
+];
+const FK = Object.fromEntries(FACETAS.map((f, j) => [f.k, j]));
+const labelDe = (k, v) => { const f = FACETAS[FK[k]]; return f && f.label ? f.label(v) : v; };
+
+/* =====================================================================
+   ESTADO + URL (los filtros se conservan al navegar, recargar o compartir)
+   ===================================================================== */
+const S = { q: '', f: {}, pmin: null, pmax: null, orden: 'nov', pp: 24, pag: 1, fav: false };
+for (const f of FACETAS) S.f[f.k] = new Set();
+const UI = { expand: {}, fsearch: {}, open: {} };
+
+function leerURL() {
+  const u = new URLSearchParams(location.search);
+  S.q = u.get('q') || '';
+  for (const f of FACETAS) S.f[f.k] = new Set(u.getAll(f.k));
+  S.pmin = u.has('min') ? +u.get('min') || null : null;
+  S.pmax = u.has('max') ? +u.get('max') || null : null;
+  S.orden = u.get('orden') || (S.q ? 'rel' : 'nov');
+  S.pp = CONFIG.porPagina.includes(+u.get('pp')) ? +u.get('pp') : 24;
+  S.pag = Math.max(1, +u.get('pag') || 1);
+  S.fav = u.get('fav') === '1';
+  return u.get('p');
+}
+function urlEstado(extra = {}) {
+  const u = new URLSearchParams();
+  if (S.q) u.set('q', S.q);
+  for (const f of FACETAS) for (const v of S.f[f.k]) u.append(f.k, v);
+  if (S.pmin != null) u.set('min', S.pmin);
+  if (S.pmax != null) u.set('max', S.pmax);
+  if (S.orden !== (S.q ? 'rel' : 'nov')) u.set('orden', S.orden);
+  if (S.pp !== 24) u.set('pp', S.pp);
+  if (S.pag > 1) u.set('pag', S.pag);
+  if (S.fav) u.set('fav', '1');
+  for (const [k, v] of Object.entries(extra)) u.set(k, v);
+  const s = u.toString();
+  return location.pathname + (s ? '?' + s : '');
+}
+function guardarURL() {
+  const pid = new URLSearchParams(location.search).get('p');
+  history.replaceState(history.state, '', urlEstado(pid ? { p: pid } : {}));
+  try { sessionStorage.setItem('golazo:estado', urlEstado()); } catch {}
+}
+
+/* =====================================================================
+   BÚSQUEDA INTELIGENTE
+   ===================================================================== */
+const VACIAS = new Set('de del la el los las y the of para con en un una por al camisetas'.split(' '));
+function tokensQ(q) { return N(q).split(' ').filter(t => t && !VACIAS.has(t)); }
+let VOCAB = null;
+function vocab() {
+  if (VOCAB) return VOCAB;
+  const s = new Set();
+  for (const p of DB.P) for (const w of p.hay.split(' ')) if (w.length >= 3) s.add(w);
+  return VOCAB = [...s];
+}
+function lev(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i]; let best = i;
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (cur[j] < best) best = cur[j];
+    }
+    if (best > max) return max + 1;
+    prev = cur;
+  }
+  return prev[b.length];
+}
+function corregir(toks) { // propone la palabra más parecida para términos sin resultados
+  const V = vocab(); let cambio = false;
+  const out = toks.map(t => {
+    if (t.length < 4 || /^\d+$/.test(t) || DB.P.some(p => p.hay.includes(' ' + t))) return t;
+    const max = t.length > 6 ? 2 : 1; let mejor = null, d = max + 1;
+    for (const w of V) { if (w[0] !== t[0] && max === 1) continue; const x = lev(t, w.slice(0, Math.max(t.length, Math.min(w.length, t.length + 1))), max); if (x < d) { d = x; mejor = w; if (!x) break; } }
+    if (mejor) { cambio = true; return mejor; }
+    return t;
+  });
+  return cambio ? out : null;
+}
+function puntuar(p, toks, frase) {
+  let s = 0;
+  for (const t of toks) {
+    const k = ' ' + t;
+    if (!p.hay.includes(k)) return -1;
+    s += p.nombreN.includes(k) ? 3 : 1;
+  }
+  if (frase && p.nombreN.includes(' ' + frase)) s += 6;
+  if (p.equipo && N(p.equipo) === frase) s += 4;
+  if (p.nuevo) s += .5;
+  if (p.prenda === 'Camisetas') s += .5;
+  if (toks.includes('retro') && !toks.some(t => t === 'estilo' || t === 'style')) {   // "retro" ⇒ primero las clásicas
+    if (p.versiones.includes('Estilo retro')) s -= 2; else if (p.temp && p.temp.y1 <= DB.maxY - 3) s += 2;
+  }
+  return s;
+}
+
+/* =====================================================================
+   MOTOR: filtra, cuenta facetas y ordena en una sola pasada
+   ===================================================================== */
+let RES = [], CNT = {}, PRANGE = [0, 0], CORR = null;
+function computar() {
+  let toks = tokensQ(S.q), frase = toks.join(' ');
+  CORR = null;
+  const favs = FAV.set;
+  const F = FACETAS.length, PBIT = 1 << F, ALL = (1 << (F + 1)) - 1;
+  const act = FACETAS.map(f => S.f[f.k]);
+  const run = (toks) => {
+    const res = [], cnt = FACETAS.map(() => new Map()); let lo = Infinity, hi = 0;
+    for (const p of DB.P) {
+      if (S.fav && !favs.has(p.id)) continue;
+      let sc = 0;
+      if (toks.length) { sc = puntuar(p, toks, frase); if (sc < 0) continue; }
+      let m = 0;
+      for (let j = 0; j < F; j++) { const sel = act[j]; if (!sel.size || p.fv[FACETAS[j].k].some(v => sel.has(v))) m |= 1 << j; }
+      if ((S.pmin == null || p.precio >= S.pmin) && (S.pmax == null || p.precio <= S.pmax)) m |= PBIT;
+      if ((m | PBIT) === ALL) { if (p.precio < lo) lo = p.precio; if (p.precio > hi) hi = p.precio; }
+      if (m === ALL) { p._s = sc; res.push(p); for (let j = 0; j < F; j++) for (const v of p.fv[FACETAS[j].k]) cnt[j].set(v, (cnt[j].get(v) || 0) + 1); }
+      else { const miss = ALL & ~m; if (miss & (miss - 1)) continue; const j = Math.log2(miss); if (j < F) for (const v of p.fv[FACETAS[j].k]) cnt[j].set(v, (cnt[j].get(v) || 0) + 1); }
+    }
+    return { res, cnt, lo, hi };
+  };
+  let r = run(toks);
+  if (!r.res.length && toks.length) {
+    const c = corregir(toks);
+    if (c) { const r2 = run(c); if (r2.res.length) { r = r2; CORR = c.join(' '); } }
+  }
+  RES = r.res; CNT = Object.fromEntries(FACETAS.map((f, j) => [f.k, r.cnt[j]]));
+  PRANGE = r.lo === Infinity ? [0, 0] : [r.lo, r.hi];
+  ordenar();
+}
+function ordenar() {
+  const o = S.orden, y = p => p.temp ? p.temp.y1 : null;
+  const cmpY = (a, b, dir) => { const ya = y(a), yb = y(b); if (ya == null && yb == null) return 0; if (ya == null) return 1; if (yb == null) return -1; return dir * (ya - yb); };
+  const by = {
+    rel: (a, b) => (b._s - a._s) || cmpY(a, b, -1) || a.i - b.i,
+    nov: (a, b) => cmpY(a, b, -1) || a.i - b.i,
+    pasc: (a, b) => a.precio - b.precio || a.i - b.i,
+    pdesc: (a, b) => b.precio - a.precio || a.i - b.i,
+    az: (a, b) => coll.compare(a.nombre, b.nombre),
+    za: (a, b) => coll.compare(b.nombre, a.nombre),
+    ydesc: (a, b) => cmpY(a, b, -1) || a.i - b.i,
+    yasc: (a, b) => cmpY(a, b, 1) || a.i - b.i,
+  }[S.orden === 'rel' && !S.q ? 'nov' : o] || ((a, b) => a.i - b.i);
+  RES.sort(by);
+}
+
+/* =====================================================================
+   FAVORITOS (LocalStorage, sin registro)
+   ===================================================================== */
+const FAV = {
+  set: new Set(),
+  cargar() { try { this.set = new Set(JSON.parse(localStorage.getItem(CONFIG.claveFavoritos) || '[]')); } catch { this.set = new Set(); } },
+  guardar() { try { localStorage.setItem(CONFIG.claveFavoritos, JSON.stringify([...this.set])); } catch {} },
+  toggle(id) { this.set.has(id) ? this.set.delete(id) : this.set.add(id); this.guardar(); this.pintar(); return this.set.has(id); },
+  pintar() {
+    const n = [...this.set].filter(id => DB.byId.has(id)).length, b = $('#favN');
+    b.textContent = n; b.classList.toggle('on', n > 0);
+    $$('[data-fav]').forEach(el => el.setAttribute('aria-pressed', this.set.has(el.dataset.fav)));
+  },
+};
+
+/* =====================================================================
+   RENDER: tarjetas, facetas, chips, paginación
+   ===================================================================== */
+function catLinea(p) { const s = etiquetaSeccion(p.seccion); return s && N(s) !== N(p.cat) ? `${p.cat} · ${s}` : p.cat; }
+function etiquetas(p) {
+  return [...p.tipos.slice(0, 2), ...p.versiones.filter(v => v !== 'Versión hincha').slice(0, 2), ...p.publicos.slice(0, 1), p.temp ? p.temp.label : (p.jugador || '')].filter(Boolean).join(' · ');
+}
+function tarjeta(p, i) {
+  const f = fotosDe(p), m = f[0], alt = f[1];
+  const b = [];
+  if (p.nuevo) b.push(`<span class="bdg new">Nuevo</span>`);
+  if (p.versiones.includes('Retro')) b.push(`<span class="bdg retro">Retro</span>`);
+  if (p.publicos.includes('Niños') || p.publicos.includes('Bebé')) b.push(`<span class="bdg kid">${p.publicos.includes('Bebé') ? 'Bebé' : 'Niños'}</span>`);
+  return `<article class="card${alt ? ' has-alt' : ''}" data-id="${esc(p.id)}" style="--i:${i}" tabindex="0" aria-label="${esc(p.nombre)}, ${precio(p.precio)}">
+  <div class="card-media">
+    <img class="main lz" src="${m ? esc(m.m) : PLACEHOLDER}" ${m ? `data-full="${esc(m.g)}"` : ''} alt="${esc(p.nombre)}" loading="lazy" decoding="async" width="520" height="520">
+    ${alt ? `<img class="alt" data-src="${esc(alt.m)}" alt="" aria-hidden="true" decoding="async">` : ''}
+    <div class="card-badges">${b.join('')}</div>
+    <button class="fav" data-fav="${esc(p.id)}" aria-pressed="${FAV.set.has(p.id)}" aria-label="Guardar en favoritos">${icon('heart')}</button>
+  </div>
+  <div class="card-body">
+    <p class="card-cat">${esc(catLinea(p))}</p>
+    <h3 class="card-name">${esc(p.nombre)}</h3>
+    ${etiquetas(p) ? `<p class="card-tags">${esc(etiquetas(p))}</p>` : ''}
+    <div class="card-foot"><span class="price">${precio(p.precio)}</span><button class="btn-det" tabindex="-1">Ver detalles ${icon('right')}</button></div>
+  </div></article>`;
+}
+function renderGrid() {
+  const g = $('#grid'), total = RES.length, pages = Math.max(1, Math.ceil(total / S.pp));
+  if (S.pag > pages) S.pag = pages;
+  const ini = (S.pag - 1) * S.pp, page = RES.slice(ini, ini + S.pp);
+  if (!total) {
+    g.innerHTML = `<div class="empty">${icon('search')}<h3>Sin resultados</h3><p>${S.fav && !FAV.set.size ? 'Aún no has guardado favoritos. Toca el ♥ en cualquier producto.' : 'Prueba con otro término o quita algunos filtros.'}</p>
+      <button class="btn btn-dark" data-act="limpiar">Limpiar búsqueda y filtros</button></div>`;
+  } else g.innerHTML = page.map((p, i) => tarjeta(p, Math.min(i, 24))).join('');
+  $('#count').innerHTML = total
+    ? `Mostrando <b>${fmtN.format(ini + 1)}–${fmtN.format(ini + page.length)}</b> de <b>${fmtN.format(total)}</b> productos`
+    : '<b>0</b> productos';
+  $('#fixNote').innerHTML = CORR ? `<p class="fix-note">No encontramos «${esc(S.q)}». Mostrando resultados para <b>«${esc(CORR)}»</b>.</p>` : '';
+  renderPager(pages);
+  renderFavCta();
+}
+function renderPager(pages) {
+  const el = $('#pager'), c = S.pag;
+  if (pages <= 1) { el.innerHTML = ''; return; }
+  const set = new Set([1, pages, c, c - 1, c + 1, c - 2, c + 2].filter(n => n >= 1 && n <= pages));
+  const nums = [...set].sort((a, b) => a - b); let h = `<button data-pag="${c - 1}" ${c === 1 ? 'disabled' : ''} aria-label="Página anterior">${icon('left')}</button>`, last = 0;
+  for (const n of nums) { if (n - last > 1) h += `<span class="dots">…</span>`; h += `<button data-pag="${n}" ${n === c ? 'aria-current="page"' : ''}>${n}</button>`; last = n; }
+  h += `<button data-pag="${c + 1}" ${c === pages ? 'disabled' : ''} aria-label="Página siguiente">${icon('right')}</button>`;
+  el.innerHTML = h;
+}
+function renderFavCta() {
+  const el = $('#favCta');
+  if (!S.fav || !RES.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="fav-cta"><span><b>${RES.length} favorito${RES.length > 1 ? 's' : ''} guardado${RES.length > 1 ? 's' : ''}</b> en este dispositivo.</span>
+    <a class="btn btn-ig btn-sm" data-act="consultar-favs" href="${CONFIG.instagram}" target="_blank" rel="noopener">${icon('ig')} Consultar mis favoritos</a></div>`;
+}
+function renderFacetas() {
+  const cont = $('#facets'), foco = document.activeElement, focoK = foco && foco.dataset && foco.dataset.fs;
+  let h = '';
+  for (const f of FACETAS) {
+    const cnt = CNT[f.k] || new Map(), sel = S.f[f.k];
+    let vals = [...new Set([...cnt.keys(), ...sel])];
+    if (!vals.length) continue;
+    if (f.num) vals.sort((a, b) => coll.compare(b, a));
+    else vals.sort((a, b) => (sel.has(b) - sel.has(a)) || (cnt.get(b) || 0) - (cnt.get(a) || 0) || coll.compare(labelDe(f.k, a), labelDe(f.k, b)));
+    const fs = N(UI.fsearch[f.k] || ''), lim = UI.expand[f.k] || fs ? Infinity : 8;
+    let shown = 0, items = '';
+    for (const v of vals) {
+      const lbl = labelDe(f.k, v);
+      if (fs && !N(lbl + ' ' + v).includes(fs)) continue;
+      if (shown >= lim && !sel.has(v)) continue;
+      shown++;
+      const n = cnt.get(v) || 0;
+      items += `<label class="opt${n ? '' : ' zero'}"><input type="checkbox" data-f="${f.k}" value="${esc(v)}" ${sel.has(v) ? 'checked' : ''}><span>${esc(lbl)}</span><small>${fmtN.format(n)}</small></label>`;
+    }
+    const abierto = UI.open[f.k] ?? (f.abierta || sel.size > 0);
+    h += `<details class="f-group" data-g="${f.k}" ${abierto ? 'open' : ''}><summary>${f.t}${sel.size ? `<em>${sel.size}</em>` : ''}${icon('down')}</summary><div class="f-body">
+      ${f.buscar && vals.length > 10 ? `<input class="f-search" data-fs="${f.k}" placeholder="Buscar ${f.t.toLowerCase()}…" value="${esc(UI.fsearch[f.k] || '')}">` : ''}
+      ${items || '<small style="color:var(--muted)">Sin coincidencias</small>'}
+      ${!fs && vals.length > 8 ? `<button class="f-more" data-more="${f.k}">${UI.expand[f.k] ? 'Ver menos' : `Ver todos (${vals.length})`}</button>` : ''}
+    </div></details>`;
+  }
+  // precio
+  const [lo, hi] = PRANGE, a = S.pmin ?? lo, b = S.pmax ?? hi, span = Math.max(1, hi - lo);
+  const pAct = S.pmin != null || S.pmax != null;
+  h += `<details class="f-group" data-g="precio" ${UI.open.precio ?? true ? 'open' : ''}><summary>Rango de precio${pAct ? '<em>1</em>' : ''}${icon('down')}</summary><div class="f-body">
+    <div class="range"><div class="track"></div><div class="fill" style="left:${(Math.max(lo, a) - lo) / span * 100}%;right:${100 - (Math.min(hi, b) - lo) / span * 100}%"></div>
+      <input type="range" id="rMin" min="${lo}" max="${hi}" step="5000" value="${Math.max(lo, Math.min(a, hi))}" aria-label="Precio mínimo">
+      <input type="range" id="rMax" min="${lo}" max="${hi}" step="5000" value="${Math.min(hi, Math.max(b, lo))}" aria-label="Precio máximo"></div>
+    <div class="price-row"><label>Mínimo<input type="number" id="pMin" inputmode="numeric" step="5000" placeholder="${lo}" value="${S.pmin ?? ''}"></label>
+    <label>Máximo<input type="number" id="pMax" inputmode="numeric" step="5000" placeholder="${hi}" value="${S.pmax ?? ''}"></label></div>
+    <small style="color:var(--muted)">${precio(lo)} – ${precio(hi)}</small></div></details>`;
+  cont.innerHTML = h;
+  if (focoK) { const el = $(`[data-fs="${focoK}"]`, cont); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
+  const nAct = FACETAS.reduce((s, f) => s + S.f[f.k].size, 0) + (pAct ? 1 : 0) + (S.fav ? 1 : 0);
+  $('#fN').textContent = nAct ? `(${nAct})` : '';
+  $('#favToggle').setAttribute('aria-pressed', S.fav);
+  $('#fApply').textContent = `Ver ${fmtN.format(RES.length)} productos`;
+}
+function renderChips() {
+  const c = [];
+  if (S.q) c.push(`<span class="chip"><small>Búsqueda:</small> ${esc(S.q)}<button data-chip="q" aria-label="Quitar búsqueda">${icon('x')}</button></span>`);
+  if (S.fav) c.push(`<span class="chip">♥ Favoritos<button data-chip="fav" aria-label="Quitar favoritos">${icon('x')}</button></span>`);
+  for (const f of FACETAS) for (const v of S.f[f.k]) c.push(`<span class="chip"><small>${f.t}:</small> ${esc(labelDe(f.k, v))}<button data-chip="${f.k}" data-v="${esc(v)}" aria-label="Quitar filtro">${icon('x')}</button></span>`);
+  if (S.pmin != null || S.pmax != null) c.push(`<span class="chip"><small>Precio:</small> ${S.pmin != null ? precio(S.pmin) : '…'} – ${S.pmax != null ? precio(S.pmax) : '…'}<button data-chip="precio" aria-label="Quitar precio">${icon('x')}</button></span>`);
+  if (c.length > 1) c.push(`<button class="chip chip-clear" data-act="limpiar">Limpiar todo</button>`);
+  $('#chips').innerHTML = c.join('');
+  // título contextual
+  const t = S.fav ? 'Mis favoritos' : S.q ? `Resultados para «${S.q}»` :
+    S.f.eq.size === 1 ? [...S.f.eq][0] : S.f.sub.size === 1 ? labelDe('sub', [...S.f.sub][0]) :
+    S.f.sec.size === 1 ? labelDe('sec', [...S.f.sec][0]) : S.f.cat.size === 1 ? labelDe('cat', [...S.f.cat][0]) : 'Catálogo';
+  $('#catTitle').textContent = t;
+  $$('.nav-btn[data-cat]').forEach(b => b.classList.toggle('act', S.f.cat.size === 1 && S.f.cat.has(b.dataset.cat)));
+}
+function actualizar({ resetPag = true, scroll = false } = {}) {
+  if (resetPag) S.pag = 1;
+  computar(); renderGrid(); renderFacetas(); renderChips(); guardarURL();
+  $('#sort').value = S.orden === 'rel' && !S.q ? 'nov' : S.orden; $('#pp').value = S.pp;
+  $('#search').classList.toggle('has-q', !!$('#q').value);
+  if (scroll) irCatalogo();
+}
+function irCatalogo() { const y = $('#catalogo').getBoundingClientRect().top + scrollY - $('#hdr').offsetHeight + 14; scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); }
+function aplicarPreset(f, extra = {}) {
+  S.q = extra.q || ''; $('#q').value = S.q; S.fav = false; S.pmin = S.pmax = null;
+  for (const x of FACETAS) S.f[x.k] = new Set(f[x.k] || []);
+  S.orden = S.q ? 'rel' : 'nov'; UI.fsearch = {};
+  cerrarMenus(); actualizar({ scroll: true });
+}
+function limpiarTodo() { aplicarPreset({}); }
+
+/* =====================================================================
+   DETALLE DEL PRODUCTO
+   ===================================================================== */
+const PD = { p: null, i: 0, fotos: [] };
+let POP_SKIP = false;
+function linkProducto(p) { return location.origin + location.pathname + '?p=' + encodeURIComponent(p.id); }
+function abrirProducto(id, { push = true } = {}) {
+  const p = DB.byId.get(id); if (!p) { toast('Ese producto ya no está en el catálogo'); return; }
+  PD.p = p; PD.i = 0; PD.fotos = fotosDe(p);
+  const dlg = $('#pd');
+  const spec = [
+    ['Categoría', p.cat, { cat: [p.cat] }],
+    ['Sección', etiquetaSeccion(p.seccion), { sec: [p.seccion] }],
+    ['Subcategoría', etiquetaSub(p.sub), p.sub ? { sub: [p.sub] } : null],
+    ['Equipo', p.equipo && p.equipo !== etiquetaSub(p.sub) ? p.equipo : null, p.equipo ? { eq: [p.equipo] } : null],
+    ['Jugador', p.jugador],
+    ['Temporada', p.temp && p.temp.y2 ? p.temp.label : null, p.temp ? { temp: [p.temp.label] } : null],
+    ['Año', p.temp ? String(p.temp.y1) : null, p.temp ? { anio: [String(p.temp.y1)] } : null],
+    ['Tipo', p.tipos.join(', ')], ['Versión', p.versiones.join(', ')], ['Público', p.publicos.join(', ')],
+    ['Prenda', p.prenda !== 'Otros' ? p.prenda : null],
+  ].filter(r => r[1]);
+  PD.links = spec.map(r => r[2] || null);
+  const rel = relacionados(p);
+  dlg.innerHTML = `<button class="pd-close" data-act="cerrar" aria-label="Cerrar">${icon('x')}</button>
+  <div class="pd-in" tabindex="-1" autofocus style="outline:none">
+    <div class="gal">
+      <div class="stage" id="stage">
+        <img id="stageImg" src="${PD.fotos[0] ? esc(PD.fotos[0].g) : PLACEHOLDER}" alt="${esc(p.nombre)}" draggable="false">
+        ${PD.fotos.length > 1 ? `<button class="nav-a prev" data-act="prev" aria-label="Foto anterior">${icon('left')}</button><button class="nav-a next" data-act="next" aria-label="Foto siguiente">${icon('right')}</button><span class="cnt" id="stageCnt">1 / ${PD.fotos.length}</span>` : ''}
+        ${PD.fotos.length ? `<span class="zhint">${icon('zoom')} Toca para ampliar</span>` : ''}
+      </div>
+      ${PD.fotos.length > 1 ? `<div class="thumbs" id="thumbs">${PD.fotos.map((f, i) => `<button data-th="${i}" aria-current="${i === 0}" aria-label="Foto ${i + 1}"><img src="${esc(f.m)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+    </div>
+    <div class="info">
+      <nav class="crumbs" aria-label="Ruta"><button data-spec="0">${esc(p.cat)}</button>${String(p.ruta || '').split('>').map(s => s.trim()).filter(s => s && N(s) !== N(p.cat)).map(s => `<span aria-hidden="true">›</span><span>${esc(s)}</span>`).join('')}</nav>
+      <h2 id="pdName">${esc(p.nombre)}</h2>
+      <div class="price">${precio(p.precio)}<small>COP</small></div>
+      <dl class="specs">${spec.map((r, i) => `<dt>${r[0]}</dt><dd>${r[2] ? `<button data-spec="${i}">${esc(r[1])}</button>` : esc(r[1])}</dd>`).join('')}</dl>
+      <div class="pd-ctas">
+        <a class="btn btn-ig" data-act="pedir" href="${CONFIG.instagram}" target="_blank" rel="noopener">${icon('ig')} Pedir por Instagram</a>
+        <button class="btn btn-line sq" data-act="compartir" aria-label="Compartir enlace">${icon('share')}</button>
+        <button class="btn btn-line sq fav-b" data-fav="${esc(p.id)}" aria-pressed="${FAV.set.has(p.id)}" aria-label="Guardar en favoritos">${icon('heart')}</button>
+      </div>
+      <p class="pd-note">${icon('info')} Al tocar «Pedir por Instagram» copiamos el nombre, precio y enlace del producto para que lo pegues en el chat. Allí te confirmamos tallas, disponibilidad y envío a toda Colombia.</p>
+      ${rel.length ? `<div class="rel"><h4>${p.equipo ? 'Más de ' + esc(p.equipo) : 'También te puede gustar'}</h4><div class="rel-row">${rel.map(r => { const f = fotosDe(r)[0];
+        return `<button data-rel="${esc(r.id)}"><div class="im"><img src="${f ? esc(f.m) : PLACEHOLDER}" alt="" loading="lazy"></div>${esc(r.nombre)}<b>${precio(r.precio)}</b></button>`; }).join('')}</div></div>` : ''}
+    </div>
+  </div>`;
+  const fv = $('.fav-b', dlg); fv.classList.add('fav'); fv.style.cssText = 'position:static;box-shadow:none;width:50px;height:50px;border-radius:999px;border:1px solid var(--line);background:#fff';
+  if (!dlg.open) dlg.showModal();
+  dlg.querySelector('.info').scrollTop = 0; dlg.querySelector('.pd-in').scrollTop = 0;
+  if (push) history.pushState({ p: p.id, desdeCatalogo: true }, '', urlEstado({ p: p.id }));
+  document.title = `${p.nombre} · ${CONFIG.tienda}`;
+  precargar(1);
+  initZoom();
+}
+function relacionados(p) {
+  const out = [];
+  const pool = p.equipo ? DB.P.filter(x => x.equipo === p.equipo && x.id !== p.id) : DB.P.filter(x => x.sub === p.sub && x.cat === p.cat && x.id !== p.id);
+  pool.sort((a, b) => (b.prenda === p.prenda) - (a.prenda === p.prenda) || (b.nFotos > 0) - (a.nFotos > 0) || (b.temp?.y1 || 0) - (a.temp?.y1 || 0));
+  for (const x of pool) { out.push(x); if (out.length >= 10) break; }
+  return out;
+}
+function verFoto(i) {
+  if (!PD.fotos.length) return;
+  PD.i = (i + PD.fotos.length) % PD.fotos.length;
+  const st = $('#stage'), im = $('#stageImg');
+  st.classList.remove('zoom'); im.style.transformOrigin = '';
+  im.style.opacity = '.25';
+  const src = PD.fotos[PD.i].g, tmp = new Image();
+  tmp.onload = tmp.onerror = () => { im.src = src; im.style.opacity = '1'; };
+  tmp.src = src;
+  const c = $('#stageCnt'); if (c) c.textContent = `${PD.i + 1} / ${PD.fotos.length}`;
+  $$('#thumbs button').forEach((b, k) => b.setAttribute('aria-current', k === PD.i));
+  $(`#thumbs [data-th="${PD.i}"]`)?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  precargar(PD.i + 1);
+}
+function precargar(i) { const f = PD.fotos[i % (PD.fotos.length || 1)]; if (f) { const im = new Image(); im.src = f.g; } }
+function initZoom() {
+  const st = $('#stage'), im = $('#stageImg'); if (!st || !PD.fotos.length) return;
+  let x0 = null, y0 = null, moved = false;
+  const origen = e => { const r = st.getBoundingClientRect(); im.style.transformOrigin = `${((e.clientX - r.left) / r.width * 100).toFixed(1)}% ${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`; };
+  st.addEventListener('pointerdown', e => { if (e.target.closest('.nav-a')) return; x0 = e.clientX; y0 = e.clientY; moved = false; });
+  st.addEventListener('pointermove', e => {
+    if (st.classList.contains('zoom') && (e.pointerType === 'mouse' || x0 != null)) origen(e);
+    if (x0 != null && Math.hypot(e.clientX - x0, e.clientY - y0) > 8) moved = true;
+  });
+  st.addEventListener('pointerup', e => {
+    if (e.target.closest('.nav-a') || x0 == null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if (!st.classList.contains('zoom') && moved && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { verFoto(PD.i + (dx < 0 ? 1 : -1)); return; }
+    if (!moved) { st.classList.toggle('zoom'); origen(e); }
+  });
+  st.addEventListener('pointerleave', () => { if (st.classList.contains('zoom') && matchMedia('(hover:hover)').matches) st.classList.remove('zoom'); });
+}
+function cerrarProducto({ pop = false } = {}) {
+  const dlg = $('#pd'); if (dlg.open) dlg.close();
+  document.title = 'Golazo Shop · Catálogo de camisetas deportivas';
+  if (!pop && new URLSearchParams(location.search).has('p')) {
+    if (history.state && history.state.p && history.state.desdeCatalogo) { POP_SKIP = true; history.back(); }
+    else history.replaceState(null, '', urlEstado());
+  }
+}
+function pedir(p) {
+  const msg = `¡Hola Golazo Shop! Me interesa este producto:\n${p.nombre}\nPrecio: ${precio(p.precio)}\n${linkProducto(p)}`;
+  toast(copiar(msg) ? 'Mensaje copiado: pégalo en el chat de Instagram 📋' : 'Abriendo Instagram…');
+}
+async function compartir(p) {
+  const url = linkProducto(p);
+  if (navigator.share) { try { await navigator.share({ title: p.nombre, text: `${p.nombre} · ${precio(p.precio)}`, url }); return; } catch (e) { if (e.name === 'AbortError') return; } }
+  toast(copiar(url) ? 'Enlace copiado ✔' : url);
+}
+function consultarFavs() {
+  const items = [...FAV.set].map(id => DB.byId.get(id)).filter(Boolean);
+  const msg = `¡Hola Golazo Shop! Quiero consultar estos productos:\n` + items.map((p, i) => `${i + 1}. ${p.nombre} – ${precio(p.precio)}`).join('\n') +
+    `\n${location.origin + location.pathname}?fav=1`;
+  toast(copiar(msg) ? 'Lista copiada: pégala en el chat de Instagram 📋' : 'Abriendo Instagram…');
+}
+
+/* =====================================================================
+   MENÚ DE CATEGORÍAS, HERO, ACCESOS, TICKER, FOOTER
+   ===================================================================== */
+function arbol() { // categoria → sección → subcategoría (con conteos)
+  const t = new Map();
+  for (const p of DB.P) {
+    if (!t.has(p.cat)) t.set(p.cat, { n: 0, sec: new Map() });
+    const c = t.get(p.cat); c.n++;
+    if (!c.sec.has(p.seccion)) c.sec.set(p.seccion, { n: 0, sub: new Map() });
+    const s = c.sec.get(p.seccion); s.n++;
+    if (p.sub) s.sub.set(p.sub, (s.sub.get(p.sub) || 0) + 1);
+  }
+  return [...t].sort((a, b) => b[1].n - a[1].n);
+}
+function renderMenu() {
+  const A = arbol(), nl = $('#navList'), db = $('#drawerBody');
+  const subsOrden = m => [...m].sort((a, b) => (SUB_GENERICAS.has(N(a[0])) - SUB_GENERICAS.has(N(b[0]))) || b[1] - a[1]);
+  nl.innerHTML = A.map(([cat, c]) => {
+    const secs = [...c.sec].sort((a, b) => b[1].n - a[1].n);
+    const cols = secs.map(([sec, s]) => `<div class="mega-col"><h5><button data-go='${esc(JSON.stringify({ cat: [cat], sec: [sec] }))}'>${esc(etiquetaSeccion(sec))} <small>${fmtN.format(s.n)}</small></button></h5>
+      <ul>${subsOrden(s.sub).slice(0, 8).map(([sub, n]) => `<li><button data-go='${esc(JSON.stringify({ cat: [cat], sec: [sec], sub: [sub] }))}'>${esc(etiquetaSub(sub))} <span>${fmtN.format(n)}</span></button></li>`).join('')}</ul></div>`).join('');
+    const cv = CATEGORIAS[N(cat)];
+    return `<li class="nav-item"><button class="nav-btn" data-cat="${esc(cat)}" aria-expanded="false">${esc(cat)} <small>${fmtN.format(c.n)}</small>${icon('down')}</button>
+      <div class="mega"><div class="mega-head wrap"><h4>${esc(cat)}${cv && N(cv[0]) !== N(cat) ? ` <small style="font-size:16px;color:#7f8896;font-family:var(--font-body);text-transform:none">${esc(cv[0])}</small>` : ''}</h4>
+      <button class="btn btn-accent btn-sm" data-go='${esc(JSON.stringify({ cat: [cat] }))}'>Ver todo (${fmtN.format(c.n)})</button></div><div class="mega-in wrap">${cols}</div></div></li>`;
+  }).join('');
+  db.innerHTML = A.map(([cat, c]) => `<div class="acc"><button aria-expanded="false">${esc(cat)}<small>${fmtN.format(c.n)}</small>${icon('down')}</button><div class="acc-body">
+    <button class="all" data-go='${esc(JSON.stringify({ cat: [cat] }))}'>Ver todo ${esc(cat)} <span>${fmtN.format(c.n)}</span></button>
+    ${[...c.sec].sort((a, b) => b[1].n - a[1].n).map(([sec, s]) => `<p class="sec-t">${esc(etiquetaSeccion(sec))}</p>
+      <button data-go='${esc(JSON.stringify({ cat: [cat], sec: [sec] }))}'>Todo en ${esc(etiquetaSeccion(sec))} <span>${fmtN.format(s.n)}</span></button>
+      ${subsOrden(s.sub).slice(0, 6).map(([sub, n]) => `<button data-go='${esc(JSON.stringify({ cat: [cat], sec: [sec], sub: [sub] }))}'>${esc(etiquetaSub(sub))} <span>${fmtN.format(n)}</span></button>`).join('')}`).join('')}
+  </div></div>`).join('');
+  $('#footCats').innerHTML = A.map(([cat]) => `<li><button data-go='${esc(JSON.stringify({ cat: [cat] }))}'>${esc(cat)}</button></li>`).join('');
+}
+function contar(f) { let n = 0; for (const p of DB.P) { let ok = true; for (const k in f) if (!p.fv[k].some(v => f[k].includes(v))) { ok = false; break; } if (ok) n++; } return n; }
+function renderAccesos() {
+  const g = { // degradados negros con matices dorados, como el logo
+    futbol: 'linear-gradient(140deg,#1f1a10,#060606 70%)', liga: 'linear-gradient(140deg,#17140e,#050505 70%)', retro: 'linear-gradient(140deg,#3a2a0c,#070605 72%)',
+    nuevo: 'linear-gradient(140deg,#5a3f10,#0a0805 72%)', nba: 'linear-gradient(140deg,#2a2112,#060606 70%)', nfl: 'linear-gradient(140deg,#1a1a1c,#050505 70%)',
+    f1: 'linear-gradient(140deg,#2c2410,#060606 70%)', kid: 'linear-gradient(140deg,#222226,#060606 70%)', ropa: 'linear-gradient(140deg,#1b1b1d,#050505 70%)',
+  };
+  const A = [
+    ['Selecciones', { sec: ['National Teams'] }, 'globe', g.futbol],
+    ['Retro', { ver: ['Retro'] }, 'retro', g.retro],
+    DB.temporadaNueva ? [`Temporada ${DB.temporadaNueva}`, { temp: [DB.temporadaNueva] }, 'star', g.nuevo] : null,
+    ['Premier League', { sec: ['Premier League'] }, 'ball', g.liga],
+    ['La Liga', { sec: ['Spain-La Liga'] }, 'ball', g.liga],
+    ['Serie A', { sec: ['Italy-Serie A'] }, 'ball', g.liga],
+    ['Bundesliga', { sec: ['Bundesliga'] }, 'ball', g.liga],
+    ['Ligue 1', { sec: ['France-Ligue 1'] }, 'ball', g.liga],
+    ['Fútbol brasileño', { sec: ['Brazil'] }, 'ball', g.futbol],
+    ['Liga MX / MLS', { sec: ['Mexico Liga / MLS'] }, 'ball', g.futbol],
+    ['NBA', { cat: ['NBA'] }, 'basket', g.nba],
+    ['NFL', { cat: ['NFL'] }, 'oval', g.nfl],
+    ['Fórmula 1', { cat: ['F1'] }, 'flag', g.f1],
+    ['Béisbol MLB', { cat: ['MLB'] }, 'cap', g.nfl],
+    ['Rugby', { cat: ['Rugby'] }, 'oval', g.futbol],
+    ['Niños', { pub: ['Niños'] }, 'kid', g.kid],
+    ['Entrenamiento', { sec: ['Training Tracksuit'] }, 'jacket', g.ropa],
+    ['Moda urbana', { cat: ['Casual / Lifestyle'] }, 'shirt', g.ropa],
+  ].filter(Boolean).map(a => [...a, contar(a[1])]).filter(a => a[4] > 0);
+  $('#quick').innerHTML = A.map(([t, f, ic, bg, n]) => `<button class="tile" style="--g:${bg}" data-go='${esc(JSON.stringify(f))}'>
+    ${icon(ic)}<span><b>${esc(t)}</b><small>${fmtN.format(n)} productos</small></span>${icon(ic, 'bg-ico')}</button>`).join('');
+  $('#footLinks').innerHTML = A.slice(0, 7).map(([t, f]) => `<li><button data-go='${esc(JSON.stringify(f))}'>${esc(t)}</button></li>`).join('') +
+    `<li><button data-act="ver-favs">Mis favoritos</button></li>`;
+}
+function renderHero() {
+  const eqs = new Set(DB.P.map(p => p.equipo).filter(Boolean));
+  const ret = DB.P.filter(p => p.versiones.includes('Retro')).length;
+  $('#heroStats').innerHTML = `<div><b>${fmtN.format(DB.P.length)}</b>productos</div><div><b>${fmtN.format(eqs.size)}+</b>equipos y selecciones</div><div><b>${fmtN.format(ret)}</b>camisetas retro</div>`;
+  const conFoto = DB.P.filter(p => p.nFotos > 0 && p.prenda === 'Camisetas');
+  const m = $('#mosaic');
+  if (conFoto.length >= 2) {
+    const pick = [], pref = conFoto.filter(p => p.versiones.includes('Retro') || p.nuevo), src = pref.length >= 3 ? pref : conFoto;
+    const usados = new Set();
+    while (pick.length < 2 && usados.size < src.length) { const p = src[Math.floor(Math.random() * src.length)]; if (!usados.has(p.id) && !pick.some(x => x.equipo && x.equipo === p.equipo)) pick.push(p); usados.add(p.id); }
+    m.innerHTML = pick.map((p, i) => `<figure class="m${i + 1}" data-id="${esc(p.id)}"><img src="${esc(fotosDe(p)[0].m)}" alt="${esc(p.nombre)}"><figcaption><b>${precio(p.precio)}</b>${esc(p.equipo || p.nombre)}</figcaption></figure>`).join('');
+  }
+  // ticker de equipos más populares
+  const c = new Map(); for (const p of DB.P) if (p.equipo) c.set(p.equipo, (c.get(p.equipo) || 0) + 1);
+  const top = [...c].sort((a, b) => b[1] - a[1]).slice(0, 22).map(([e]) => `<button data-go='${esc(JSON.stringify({ eq: [e] }))}'>${esc(e)}</button>`).join('');
+  $('#tickerTrack').innerHTML = top + top;
+}
+function renderSocial() {
+  const r = CONFIG.redes, s = [`<a href="${CONFIG.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${icon('ig')}</a>`];
+  if (r.facebook) s.push(`<a href="${esc(r.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ico fill" viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v8h4v-8h3l.5-4h-3.5V9c0-.6.4-1 1-1z"/></svg></a>`);
+  if (r.tiktok) s.push(`<a href="${esc(r.tiktok)}" target="_blank" rel="noopener" aria-label="TikTok"><svg class="ico fill" viewBox="0 0 24 24"><path d="M16 3c.4 2.4 1.9 4 4.5 4.3v3.4c-1.6 0-3.1-.5-4.4-1.3v6.3A6.2 6.2 0 1 1 9.9 9.6v3.5a2.8 2.8 0 1 0 2.7 2.8V3z"/></svg></a>`);
+  if (r.whatsapp) s.push(`<a href="${esc(r.whatsapp)}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20l1.3-4A8 8 0 1 1 8.4 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2z"/></svg></a>`);
+  $('#social').innerHTML = s.join('');
+  $$('[data-ig]').forEach(a => a.href = CONFIG.instagram);
+}
+
+/* =====================================================================
+   SUGERENCIAS DEL BUSCADOR
+   ===================================================================== */
+const SUG = { items: [], act: -1 };
+function sugerir(q) {
+  const box = $('#sugs'), toks = tokensQ(q);
+  if (!toks.length || !DB.P.length) { box.classList.remove('on'); $('#q').setAttribute('aria-expanded', 'false'); return; }
+  const frase = toks.join(' '), prods = [], eqC = new Map();
+  for (const p of DB.P) { const s = puntuar(p, toks, frase); if (s < 0) continue; prods.push([s, p]); if (p.equipo) eqC.set(p.equipo, (eqC.get(p.equipo) || 0) + 1); }
+  prods.sort((a, b) => b[0] - a[0] || (b[1].temp?.y1 || 0) - (a[1].temp?.y1 || 0));
+  const eqs = [...eqC].filter(([e]) => toks.every(t => (' ' + N(e) + ' ' + N(canonEquipo(e)?.a || '')).includes(' ' + t)) || N(e).includes(frase)).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  SUG.items = []; let h = '';
+  if (eqs.length) { h += '<h6>Equipos y selecciones</h6>'; for (const [e, n] of eqs) { SUG.items.push({ go: { eq: [e] } }); h += `<button class="sug" role="option" data-s="${SUG.items.length - 1}"><span class="ph" style="display:grid;place-items:center">${icon('shirt')}</span><span class="t">${esc(e)}</span><span class="chip-k">${fmtN.format(n)}</span></button>`; } }
+  if (prods.length) { h += '<h6>Productos</h6>'; for (const [, p] of prods.slice(0, 6)) { SUG.items.push({ id: p.id }); const f = fotosDe(p)[0];
+    h += `<button class="sug" role="option" data-s="${SUG.items.length - 1}"><img src="${f ? esc(f.m) : PLACEHOLDER}" alt="" loading="lazy"><span class="t">${esc(p.nombre)}<small>${esc(catLinea(p))}</small></span><span class="pr">${precio(p.precio)}</span></button>`; } }
+  if (prods.length) { SUG.items.push({ all: true }); h += `<button class="sug-all" data-s="${SUG.items.length - 1}">Ver los ${fmtN.format(prods.length)} resultados para «${esc(q)}» →</button>`; }
+  else { const c = corregir(toks); h = `<div class="sug-empty">Sin coincidencias para «${esc(q)}».${c ? ` ¿Quisiste decir <button class="sug-fix" style="text-decoration:underline;font-weight:600" data-fix="${esc(c.join(' '))}">${esc(c.join(' '))}</button>?` : ''}</div>`; }
+  SUG.act = -1; box.innerHTML = h; box.classList.add('on'); $('#q').setAttribute('aria-expanded', 'true');
+}
+function elegirSug(i) {
+  const it = SUG.items[i]; if (!it) return;
+  cerrarSugs();
+  if (it.id) abrirProducto(it.id);
+  else if (it.go) aplicarPreset(it.go);
+  else { $('#q').blur(); actualizar({ scroll: true }); }
+}
+function cerrarSugs() { $('#sugs').classList.remove('on'); $('#q').setAttribute('aria-expanded', 'false'); }
+
+/* =====================================================================
+   EVENTOS
+   ===================================================================== */
+function cerrarMenus() {
+  $$('.nav-item.open').forEach(li => { li.classList.remove('open'); $('.nav-btn', li).setAttribute('aria-expanded', 'false'); });
+  $('#drawer').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true');
+  $('#filters').classList.remove('on'); $('#fBg').classList.remove('on');
+  document.body.style.overflow = '';
+}
+function eventos() {
+  const q = $('#q');
+  const enVivo = debounce(() => { S.q = q.value.trim(); if (S.q && S.orden === 'nov') S.orden = 'rel'; if (!S.q && S.orden === 'rel') S.orden = 'nov'; actualizar(); }, 260);
+  const sug = debounce(() => sugerir(q.value), 110);
+  q.addEventListener('input', () => { $('#search').classList.toggle('has-q', !!q.value); sug(); enVivo(); });
+  q.addEventListener('focus', () => { if (q.value) sugerir(q.value); });
+  q.addEventListener('keydown', e => {
+    const box = $('#sugs'), btns = $$('[data-s]', box);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { if (!btns.length) return; e.preventDefault(); SUG.act = (SUG.act + (e.key === 'ArrowDown' ? 1 : -1) + btns.length) % btns.length; btns.forEach((b, i) => b.classList.toggle('act', i === SUG.act)); btns[SUG.act].scrollIntoView({ block: 'nearest' }); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (SUG.act >= 0 && btns[SUG.act]) elegirSug(+btns[SUG.act].dataset.s); else { cerrarSugs(); S.q = q.value.trim(); if (S.q) S.orden = 'rel'; q.blur(); actualizar({ scroll: true }); } }
+    else if (e.key === 'Escape') cerrarSugs();
+  });
+  $('#qClear').addEventListener('click', () => { q.value = ''; S.q = ''; if (S.orden === 'rel') S.orden = 'nov'; cerrarSugs(); actualizar(); q.focus(); });
+  $('#sugs').addEventListener('mousedown', e => e.preventDefault());
+  $('#sugs').addEventListener('click', e => { const f = e.target.closest('[data-fix]'); if (f) { q.value = f.dataset.fix; sugerir(q.value); S.q = q.value; actualizar(); return; } const b = e.target.closest('[data-s]'); if (b) elegirSug(+b.dataset.s); });
+  document.addEventListener('click', e => { if (!e.target.closest('#search')) cerrarSugs(); if (!e.target.closest('.nav-item')) $$('.nav-item.open').forEach(li => li.classList.remove('open')); });
+
+  // navegación global por data-go / data-act
+  document.addEventListener('click', e => {
+    const go = e.target.closest('[data-go]');
+    if (go) { e.preventDefault(); if ($('#pd').open) cerrarProducto(); aplicarPreset(JSON.parse(go.dataset.go)); return; }
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    const act = a.dataset.act;
+    if (act === 'limpiar') limpiarTodo();
+    else if (act === 'ver-favs') { S.fav = true; actualizar({ scroll: true }); }
+    else if (act === 'consultar-favs') consultarFavs();
+  });
+  // menú desktop
+  $('#navList').addEventListener('click', e => {
+    const b = e.target.closest('.nav-btn'); if (!b) return;
+    const li = b.parentElement, was = li.classList.contains('open');
+    $$('.nav-item.open').forEach(x => x.classList.remove('open'));
+    li.classList.toggle('open', !was); b.setAttribute('aria-expanded', !was);
+  });
+  let hoverT;
+  $('#navList').addEventListener('mouseover', e => { if (!matchMedia('(hover:hover)').matches) return; const li = e.target.closest('.nav-item'); if (!li) return; clearTimeout(hoverT); hoverT = setTimeout(() => { $$('.nav-item.open').forEach(x => x !== li && x.classList.remove('open')); li.classList.add('open'); }, 120); });
+  $('#navList').addEventListener('mouseleave', () => { clearTimeout(hoverT); hoverT = setTimeout(() => $$('.nav-item.open').forEach(x => x.classList.remove('open')), 220); });
+  $('#navList').addEventListener('mouseenter', () => clearTimeout(hoverT));
+  // menú móvil
+  $('#btnMenu').addEventListener('click', () => { $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; });
+  $('#drawer').addEventListener('click', e => { if (e.target.closest('[data-close]')) cerrarMenus(); const acc = e.target.closest('.acc>button'); if (acc) { const p = acc.parentElement; p.classList.toggle('open'); acc.setAttribute('aria-expanded', p.classList.contains('open')); } });
+  // filtros
+  const fx = $('#facets');
+  fx.addEventListener('change', e => {
+    const c = e.target.closest('input[type=checkbox][data-f]');
+    if (c) { const s = S.f[c.dataset.f]; c.checked ? s.add(c.value) : s.delete(c.value); actualizar(); return; }
+    if (e.target.id === 'pMin' || e.target.id === 'pMax') { const v = e.target.value === '' ? null : Math.max(0, +e.target.value); S[e.target.id === 'pMin' ? 'pmin' : 'pmax'] = v; actualizar(); }
+  });
+  fx.addEventListener('input', e => {
+    if (e.target.dataset.fs) { UI.fsearch[e.target.dataset.fs] = e.target.value; renderFacetas(); }
+    if (e.target.id === 'rMin' || e.target.id === 'rMax') {
+      const lo = $('#rMin'), hi = $('#rMax'); if (+lo.value > +hi.value) (e.target === lo ? lo : hi).value = e.target === lo ? hi.value : lo.value;
+      $('#pMin').value = lo.value; $('#pMax').value = hi.value; rangoDeb();
+    }
+  });
+  const rangoDeb = debounce(() => { const lo = $('#rMin'), hi = $('#rMax'); S.pmin = +lo.value > +lo.min ? +lo.value : null; S.pmax = +hi.value < +hi.max ? +hi.value : null; actualizar(); }, 300);
+  fx.addEventListener('click', e => { const m = e.target.closest('[data-more]'); if (m) { UI.expand[m.dataset.more] = !UI.expand[m.dataset.more]; renderFacetas(); } });
+  fx.addEventListener('toggle', e => { if (e.target.matches('details[data-g]')) UI.open[e.target.dataset.g] = e.target.open; }, true);
+  $('#favToggle').addEventListener('click', () => { S.fav = !S.fav; actualizar(); });
+  $('#btnFilters').addEventListener('click', () => { $('#filters').classList.add('on'); $('#fBg').classList.add('on'); document.body.style.overflow = 'hidden'; });
+  ['#fClose', '#fBg', '#fApply'].forEach(s => $(s).addEventListener('click', () => { cerrarMenus(); if (s === '#fApply') irCatalogo(); }));
+  $('#fClear').addEventListener('click', () => { for (const f of FACETAS) S.f[f.k].clear(); S.pmin = S.pmax = null; S.fav = false; actualizar(); });
+  $('#chips').addEventListener('click', e => {
+    const b = e.target.closest('[data-chip]'); if (!b) return; const k = b.dataset.chip;
+    if (k === 'q') { S.q = ''; $('#q').value = ''; if (S.orden === 'rel') S.orden = 'nov'; }
+    else if (k === 'fav') S.fav = false; else if (k === 'precio') S.pmin = S.pmax = null; else S.f[k].delete(b.dataset.v);
+    actualizar();
+  });
+  $('#sort').addEventListener('change', e => { S.orden = e.target.value; ordenar(); S.pag = 1; renderGrid(); guardarURL(); });
+  $('#pp').addEventListener('change', e => { S.pp = +e.target.value; S.pag = 1; renderGrid(); guardarURL(); });
+  $('#pager').addEventListener('click', e => { const b = e.target.closest('[data-pag]'); if (!b || b.disabled) return; S.pag = +b.dataset.pag; renderGrid(); guardarURL(); irCatalogo(); });
+  // tarjetas
+  const grid = $('#grid');
+  grid.addEventListener('click', e => {
+    const f = e.target.closest('[data-fav]');
+    if (f) { e.stopPropagation(); const on = FAV.toggle(f.dataset.fav); toast(on ? 'Guardado en favoritos ♥' : 'Quitado de favoritos'); if (S.fav) actualizar({ resetPag: false }); return; }
+    const c = e.target.closest('.card'); if (c) abrirProducto(c.dataset.id);
+  });
+  grid.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList.contains('card')) abrirProducto(e.target.dataset.id); });
+  grid.addEventListener('mouseover', e => { const c = e.target.closest('.card.has-alt'); if (!c) return; const a = $('img.alt[data-src]', c); if (a) { a.src = a.dataset.src; a.removeAttribute('data-src'); } });
+  // carga suave de imágenes + respaldo si una foto falla
+  document.addEventListener('load', e => { if (e.target.tagName === 'IMG' && e.target.classList.contains('lz')) e.target.classList.add('ok'); }, true);
+  document.addEventListener('error', e => {
+    const im = e.target; if (im.tagName !== 'IMG' || im.src.startsWith('data:')) return;
+    if (im.dataset.full && im.src.indexOf(im.dataset.full) === -1) { im.src = im.dataset.full; delete im.dataset.full; return; }
+    if (im.classList.contains('alt')) { im.remove(); im.closest?.('.card')?.classList.remove('has-alt'); return; }
+    im.src = PLACEHOLDER; im.classList.add('ok');
+  }, true);
+  // modal
+  const dlg = $('#pd');
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg) { cerrarProducto(); return; }
+    const a = e.target.closest('[data-act]');
+    if (a) { const k = a.dataset.act; if (k === 'cerrar') cerrarProducto(); else if (k === 'prev') verFoto(PD.i - 1); else if (k === 'next') verFoto(PD.i + 1); else if (k === 'pedir') pedir(PD.p); else if (k === 'compartir') compartir(PD.p); return; }
+    const th = e.target.closest('[data-th]'); if (th) { verFoto(+th.dataset.th); return; }
+    const fv = e.target.closest('[data-fav]'); if (fv) { const on = FAV.toggle(fv.dataset.fav); toast(on ? 'Guardado en favoritos ♥' : 'Quitado de favoritos'); return; }
+    const r = e.target.closest('[data-rel]'); if (r) { history.replaceState({ p: r.dataset.rel, desdeCatalogo: history.state?.desdeCatalogo }, '', urlEstado({ p: r.dataset.rel })); abrirProducto(r.dataset.rel, { push: false }); return; }
+    const sp = e.target.closest('[data-spec]'); if (sp) { const f = PD.links[+sp.dataset.spec]; cerrarProducto(); if (f) aplicarPreset(f); }
+  });
+  dlg.addEventListener('cancel', e => { e.preventDefault(); cerrarProducto(); });
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight') verFoto(PD.i + 1); if (e.key === 'ArrowLeft') verFoto(PD.i - 1); });
+  $('#mosaic').addEventListener('click', e => { const f = e.target.closest('figure[data-id]'); if (f) abrirProducto(f.dataset.id); });
+  $('#btnFavs').addEventListener('click', () => { S.fav = true; actualizar({ scroll: true }); });
+  // historial (atrás/adelante)
+  addEventListener('popstate', () => {
+    if (POP_SKIP) { POP_SKIP = false; guardarURL(); return; }   // cierre del modal: se conserva el estado actual
+    const pid = leerURL(); $('#q').value = S.q;
+    if (pid && DB.byId.has(pid)) abrirProducto(pid, { push: false }); else cerrarProducto({ pop: true });
+    computar(); renderGrid(); renderFacetas(); renderChips();
+  });
+  // header + volver arriba
+  let tick = false;
+  addEventListener('scroll', () => { if (tick) return; tick = true; requestAnimationFrame(() => { $('#hdr').classList.toggle('scrolled', scrollY > 8); $('#toTop').classList.toggle('on', scrollY > 900); tick = false; }); }, { passive: true });
+  $('#toTop').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+  addEventListener('keydown', e => { if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); q.focus(); } if (e.key === 'Escape') cerrarMenus(); });
+}
+
+/* =====================================================================
+   INICIO
+   ===================================================================== */
+function skeleton() { $('#grid').innerHTML = Array.from({ length: 12 }, () => '<div class="skel"><div></div><p></p><p></p></div>').join(''); }
+async function iniciar() {
+  $('#year').textContent = new Date().getFullYear();
+  renderSocial(); skeleton(); FAV.cargar(); eventos();
+  let json;
+  try {
+    const r = await fetch(CONFIG.datos, { cache: 'no-cache' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    json = await r.json();
+  } catch (err) {
+    $('#count').textContent = '';
+    $('#grid').innerHTML = `<div class="load-err" style="grid-column:1/-1"><h3>No se pudo cargar el catálogo</h3><p>No encontramos <code>${esc(CONFIG.datos)}</code> (${esc(err.message)}).</p>
+      <p>Si abriste <code>index.html</code> con doble clic, el navegador bloquea la lectura de archivos locales: ejecuta <code>python -m http.server</code> en la carpeta del sitio y abre <code>http://localhost:8000</code>. En GitHub Pages funciona sin pasos adicionales.</p></div>`;
+    return;
+  }
+  construir(json);
+  renderMenu(); renderAccesos(); renderHero(); FAV.pintar();
+  let pid = leerURL();
+  if (!location.search) { try { const s = sessionStorage.getItem('golazo:estado'); if (s && s.includes('?')) { history.replaceState(null, '', s); pid = leerURL(); } } catch {} }
+  $('#q').value = S.q;
+  const pag = S.pag; computar(); S.pag = pag; renderGrid(); renderFacetas(); renderChips(); guardarURL();
+  $('#sort').value = S.orden === 'rel' && !S.q ? 'nov' : S.orden; $('#pp').value = S.pp;
+  if (pid && DB.byId.has(pid)) { history.replaceState(null, '', urlEstado()); history.pushState({ p: pid, desdeCatalogo: true }, '', urlEstado({ p: pid })); abrirProducto(pid, { push: false }); }
+  else if (pid) toast('El producto compartido ya no está disponible');
+  if ([...new URLSearchParams(location.search).keys()].some(k => k !== 'p')) setTimeout(irCatalogo, 50);
+}
+iniciar();
+</script>
+</body>
+</html>
